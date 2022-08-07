@@ -97,7 +97,7 @@ def cdc_customer_landing_to_rawdb_csv(
     )
 
     context.log.info("Change set")
-    df_change_set.show(truncate=False)
+    display(df_change_set)
     df_change_set.persist()
 
 
@@ -117,7 +117,7 @@ def cdc_customer_landing_to_rawdb_csv(
     )
     df_current_result = context.spark.sql("select * from raw.cdc_customer")
     context.log.info("Current")
-    df_current_result.show(truncate=False)
+    display(df_current_result)
     
 
     #####################  INSERT DATA INTO HISTORY TABLE  #################################
@@ -147,7 +147,7 @@ def cdc_customer_landing_to_rawdb_csv(
     )
     df_history_result = context.spark.sql("select * from raw.cdc_customer_history")
     context.log.info("History")
-    df_history_result.show(truncate=False)
+    display(df_history_result)
 
 # incremental load
 results = cdc_customer_landing_to_rawdb_csv(
