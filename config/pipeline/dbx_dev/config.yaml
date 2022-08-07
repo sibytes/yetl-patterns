@@ -1,0 +1,12 @@
+datalake: "/mnt/datalake"
+datalake_protocol: "dbfs:"
+spark:
+  spark.master: local
+
+spark_schema_repo:
+  spark_schema_file:
+    spark_schema_root: ./config/schema/spark
+
+deltalake_schema_repo:
+  deltalake_sql_file:
+    deltalake_schema_root: ./config/schema/deltalake
