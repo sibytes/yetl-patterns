@@ -86,41 +86,28 @@ def cdc_customer_landing_to_rawdb_csv(
 
     df_next = df_change_set.selectExpr(
         "id as next_id",
-        "(version - 1) as next_version", 
+        "(version + 1) as next_version", 
         "date_add(from_date, -1) as `next_from_date`"
     )
     df_change_set = (
         df_change_set
-        .join(df_next,  (df_change_set["version"] == df_next["next_version"]) & (df_change_set["id"] == df_next["next_id"]) , "left")
-        .withColumn("to_date", fn.expr("if(next_from_date is null, to_date('9999-12-31', 'yyyy-MM-dd'), next_from_date)"))
-        .drop("next_id","next_version", "next_from_date", "data_name")    
+        .join(df_next,  
+             (df_change_set["version"] == df_next["next_version"]) & (df_change_set["id"] == df_next["next_id"]),
+              "left")
+        .withColumn("to_date", fn.expr("if(next_from_date is null, to_date('9999-12-31', 'yyyy-MM-dd'), next_from_date)")) 
     )
 
     context.log.info("Change set")
-    display(df_change_set)
+    display(df_change_set.orderBy("id"))
+
+    df_change_set = df_change_set.drop("next_id","next_version", "next_from_date", "data_name")   
+
     df_change_set.persist()
 
-
-    #####################  INSERT DATA INTO CURRENT TABLE  #################################
-
-    # set the change tracking columns of the change set.
-    result = (
-        dst_table.alias("dst")
-        .merge(
-            df_change_set.alias("src").where("version = 1"),
-            "dst.id = src.id"
-        )
-        .whenNotMatchedInsertAll("src.load_flag in ('I','U')")
-        .whenMatchedUpdateAll("src.load_flag in ('I','U') and src.extract_date != dst.extract_date")
-        .whenMatchedDelete("src.load_flag = 'D'")
-        .execute()
-    )
-    df_current_result = context.spark.sql("select * from raw.cdc_customer")
-    context.log.info("Current")
-    display(df_current_result)
     
-
     #####################  INSERT DATA INTO HISTORY TABLE  #################################
+    context.log.info("Change Set for History")
+    display(df_change_set.where("not active").orderBy("id"))
 
     result = (
         dst_table_history.alias("dst")
@@ -147,12 +134,105 @@ def cdc_customer_landing_to_rawdb_csv(
     )
     df_history_result = context.spark.sql("select * from raw.cdc_customer_history")
     context.log.info("History")
-    display(df_history_result)
+    display(df_history_result.orderBy("id"))
 
+
+    #####################  INSERT DATA INTO CURRENT TABLE  #################################
+    context.log.info("Change Set for Current")
+    display(df_change_set.where("version = 1").orderBy("id"))
+
+    # set the change tracking columns of the change set.
+    result = (
+        dst_table.alias("dst")
+        .merge(
+            df_change_set.alias("src").where("version = 1"),
+            "dst.id = src.id"
+        )
+        .whenNotMatchedInsertAll("src.load_flag in ('I','U')")
+        .whenMatchedUpdateAll("src.load_flag in ('I','U') and src.extract_date != dst.extract_date")
+        .whenMatchedDelete("src.load_flag = 'D'")
+        .execute()
+    )
+    df_current_result = context.spark.sql("select * from raw.cdc_customer")
+    context.log.info("Current")
+    display(df_current_result.orderBy("id"))
+
+# **********************************************************
 # incremental load
-results = cdc_customer_landing_to_rawdb_csv(
-    timeslice = Timeslice(2022, 8, 1)
-)
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 1)
+# )
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 1)
+# )
+
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 2)
+# )
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 2)
+# )
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 3)
+# )
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 4)
+# )
+
+# **********************************************************
+# incremental backwards
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 4)
+# )
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 3)
+# )
+
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 2)
+# )
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 1)
+# )
+
+# **********************************************************
+# Bulk
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, '*')
+# )
+
+# **********************************************************
+# Out Of Order
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 1)
+# )
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 2)
+# )
+
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 3)
+# )
+
+# results = cdc_customer_landing_to_rawdb_csv(
+#     timeslice = Timeslice(2022, 8, 4)
+# )
+
+
+# **********************************************************
 
 
 
