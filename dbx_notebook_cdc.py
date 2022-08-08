@@ -98,7 +98,7 @@ def cdc_customer_landing_to_rawdb_csv(
     )
 
     context.log.info("Change set")
-    display(df_change_set.orderBy("id"))
+    display(df_change_set.orderBy("id","extract_date"))
 
     df_change_set = df_change_set.drop("next_id","next_version", "next_from_date", "data_name")   
 
@@ -107,7 +107,7 @@ def cdc_customer_landing_to_rawdb_csv(
     
     #####################  INSERT DATA INTO HISTORY TABLE  #################################
     context.log.info("Change Set for History")
-    display(df_change_set.where("not active").orderBy("id"))
+    display(df_change_set.where("not active").orderBy("id","extract_date"))
 
     result = (
         dst_table_history.alias("dst")
@@ -139,7 +139,7 @@ def cdc_customer_landing_to_rawdb_csv(
 
     #####################  INSERT DATA INTO CURRENT TABLE  #################################
     context.log.info("Change Set for Current")
-    display(df_change_set.where("version = 1").orderBy("id"))
+    display(df_change_set.where("version = 1").orderBy("id","extract_date"))
 
     # set the change tracking columns of the change set.
     result = (
@@ -155,7 +155,7 @@ def cdc_customer_landing_to_rawdb_csv(
     )
     df_current_result = context.spark.sql("select * from raw.cdc_customer")
     context.log.info("Current")
-    display(df_current_result.orderBy("id"))
+    display(df_current_result.orderBy("id","extract_date"))
 
 # **********************************************************
 # incremental load
