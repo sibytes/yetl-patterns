@@ -1,0 +1,46 @@
+INFO : 2022-08-10 01:55:54,728 : cdc_append : _config_provider.py.load_config: line(41) : Loading Dataflow configuration from file /Users/shaunryan/AzureDevOps/yetl-patterns/config/pipeline/local/config.yaml
+INFO : 2022-08-10 01:55:54,730 : cdc_append : _context.py._get_spark_context: line(85) : Setting spark context
+:: loading settings :: url = jar:file:/Users/shaunryan/opt/spark-3.2.1-bin-hadoop3.2/jars/ivy-2.5.0.jar!/org/apache/ivy/core/settings/ivysettings.xml
+INFO : 2022-08-10 01:55:59,377 : cdc_append : _context.py.__init__: line(50) : Setting application context spark logger at level ERROR
+INFO : 2022-08-10 01:55:59,380 : cdc_append : _factory.py.get_file_system_type: line(50) : Setting filestystem using protocol file:
+INFO : 2022-08-10 01:55:59,380 : cdc_append : _context.py.__init__: line(66) : Setting application context dataflow cdc_append
+INFO : 2022-08-10 01:55:59,380 : cdc_append : _config_provider.py.load_pipeline_config: line(29) : Loading Dataflow configuration from file /Users/shaunryan/AzureDevOps/yetl-patterns/config/pipeline/local/cdc_append.yaml
+INFO : 2022-08-10 01:55:59,393 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on spark_schema_file 
+INFO : 2022-08-10 01:55:59,393 : cdc_append : _spark_file_schema_repo.py.load_schema: line(50) : Loading schema for dataset landing.cdc_customer from /Users/shaunryan/AzureDevOps/yetl-patterns/config/schema/spark/landing/cdc_customer.yaml using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 01:55:59,399 : cdc_append : _reader.py.__init__: line(49) : auto_io = True automatically creating or altering exception delta table landing.cdc_customer _correlation_id=1e322612-9b29-47dc-b6dd-be2b92ae147f
+INFO : 2022-08-10 01:55:59,400 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `landing`
+INFO : 2022-08-10 01:56:06,849 : cdc_append : _delta_lake.py.create_table: line(16) : Creating table if not exists landing.exceptions at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/exceptions/landing/exceptions
+INFO : 2022-08-10 01:56:12,930 : cdc_append : _reader.py.read: line(195) : Reading data for landing.cdc_customer from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv with options {'mode': 'PERMISSIVE', 'inferSchema': False, 'header': True, 'timestampFormat': 'yyyy-MM-dd HH:mm:ss'} _correlation_id=1e322612-9b29-47dc-b6dd-be2b92ae147f
+INFO : 2022-08-10 01:56:13,026 : cdc_append : _reader.py.validate: line(181) : Validating dataframe read using PERMISSIVE corrupt column at _corrupt_record _correlation_id=1e322612-9b29-47dc-b6dd-be2b92ae147f
+INFO : 2022-08-10 01:56:13,545 : cdc_append : _reader.py.validate: line(192) : {
+    "validation": {
+        "schema_on_read": {
+            "landing.cdc_customer": {
+                "total_count": 10,
+                "valid_count": 10,
+                "exception_count": 0
+            }
+        }
+    }
+}
+INFO : 2022-08-10 01:56:13,546 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on deltalake_sql_file 
+INFO : 2022-08-10 01:56:13,546 : cdc_append : _deltalake_sql_file.py.load_schema: line(43) : Loading schema for dataset raw.cdc_append_customer from ./config/schema/deltalake/raw/cdc_append_customer.sql using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 01:56:13,546 : cdc_append : _writer.py.__init__: line(40) : auto_io = True automatically creating or altering delta table raw.cdc_append_customer
+INFO : 2022-08-10 01:56:13,546 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `raw`
+INFO : 2022-08-10 01:56:13,635 : cdc_append : _delta_lake.py.create_table: line(16) : Creating table if not exists raw.cdc_append_customer at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer
+INFO : 2022-08-10 01:56:23,435 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on deltalake_sql_file 
+INFO : 2022-08-10 01:56:23,436 : cdc_append : _deltalake_sql_file.py.load_schema: line(43) : Loading schema for dataset raw.cdc_append_customer_history from ./config/schema/deltalake/raw/cdc_append_customer_history.sql using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 01:56:23,436 : cdc_append : _writer.py.__init__: line(40) : auto_io = True automatically creating or altering delta table raw.cdc_append_customer_history
+INFO : 2022-08-10 01:56:23,436 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `raw`
+INFO : 2022-08-10 01:56:23,499 : cdc_append : _delta_lake.py.create_table: line(16) : Creating table if not exists raw.cdc_append_customer_history at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer_history
+INFO : 2022-08-10 01:56:31,394 : cdc_append : _framework.py.wrap_function: line(36) : Executing Dataflow cdc_append with:
+                timeslice=2022-08-01 00:00:00.000000 
+                retries=1 
+                save_type=DefaultSave
+INFO : 2022-08-10 01:56:31,421 : cdc_append : cdc_append.py.cdc_append: line(30) : Fetched dst delta table raw.cdc_append_customer from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer
+INFO : 2022-08-10 01:56:31,429 : cdc_append : cdc_append.py.cdc_append: line(37) : Fetched dst delta table raw.cdc_append_customer_history from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer_history
+ERROR : 2022-08-10 01:56:31,470 : cdc_append : _framework.py.wrap_function: line(56) : Dataflow application cdc_append failed due to Reference 'i.extract_date' is ambiguous, could be: i.extract_date, i.extract_date..
+INFO : 2022-08-10 01:56:31,470 : cdc_append : _framework.py.wrap_function: line(59) : Retrying cdc_append in after 1 seconds; 0 retries are remaning.
+INFO : 2022-08-10 01:56:32,485 : cdc_append : cdc_append.py.cdc_append: line(30) : Fetched dst delta table raw.cdc_append_customer from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer
+INFO : 2022-08-10 01:56:32,493 : cdc_append : cdc_append.py.cdc_append: line(37) : Fetched dst delta table raw.cdc_append_customer_history from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer_history
+ERROR : 2022-08-10 01:56:32,518 : cdc_append : _framework.py.wrap_function: line(56) : Dataflow application cdc_append failed due to Reference 'i.extract_date' is ambiguous, could be: i.extract_date, i.extract_date..

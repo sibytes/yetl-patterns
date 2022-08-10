@@ -1,0 +1,992 @@
+INFO : 2022-08-10 02:52:40,763 : cdc_append : _config_provider.py.load_config: line(41) : Loading Dataflow configuration from file /Users/shaunryan/AzureDevOps/yetl-patterns/config/pipeline/local/config.yaml
+INFO : 2022-08-10 02:52:40,765 : cdc_append : _context.py._get_spark_context: line(85) : Setting spark context
+:: loading settings :: url = jar:file:/Users/shaunryan/opt/spark-3.2.1-bin-hadoop3.2/jars/ivy-2.5.0.jar!/org/apache/ivy/core/settings/ivysettings.xml
+INFO : 2022-08-10 02:52:45,423 : cdc_append : _context.py.__init__: line(50) : Setting application context spark logger at level ERROR
+INFO : 2022-08-10 02:52:45,425 : cdc_append : _factory.py.get_file_system_type: line(50) : Setting filestystem using protocol file:
+INFO : 2022-08-10 02:52:45,426 : cdc_append : _context.py.__init__: line(66) : Setting application context dataflow cdc_append
+INFO : 2022-08-10 02:52:45,426 : cdc_append : _config_provider.py.load_pipeline_config: line(29) : Loading Dataflow configuration from file /Users/shaunryan/AzureDevOps/yetl-patterns/config/pipeline/local/cdc_append.yaml
+INFO : 2022-08-10 02:52:45,439 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on spark_schema_file 
+INFO : 2022-08-10 02:52:45,439 : cdc_append : _spark_file_schema_repo.py.load_schema: line(50) : Loading schema for dataset landing.cdc_customer from /Users/shaunryan/AzureDevOps/yetl-patterns/config/schema/spark/landing/cdc_customer.yaml using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 02:52:45,445 : cdc_append : _reader.py.__init__: line(49) : auto_io = True automatically creating or altering exception delta table landing.cdc_customer _correlation_id=5da2587b-1940-447c-86ff-815ac4452dcf
+INFO : 2022-08-10 02:52:45,445 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `landing`
+INFO : 2022-08-10 02:52:51,580 : cdc_append : _reader.py.create_or_alter_table: line(61) : Exception table already exists landing.exceptions at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/exceptions/landing/exceptions _correlation_id=5da2587b-1940-447c-86ff-815ac4452dcf
+INFO : 2022-08-10 02:52:51,580 : cdc_append : _reader.py.read: line(195) : Reading data for landing.cdc_customer from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv with options {'mode': 'PERMISSIVE', 'inferSchema': False, 'header': True, 'timestampFormat': 'yyyy-MM-dd HH:mm:ss'} _correlation_id=5da2587b-1940-447c-86ff-815ac4452dcf
+INFO : 2022-08-10 02:52:51,888 : cdc_append : _reader.py.validate: line(181) : Validating dataframe read using PERMISSIVE corrupt column at _corrupt_record _correlation_id=5da2587b-1940-447c-86ff-815ac4452dcf
+INFO : 2022-08-10 02:52:52,798 : cdc_append : _reader.py.validate: line(192) : {
+    "validation": {
+        "schema_on_read": {
+            "landing.cdc_customer": {
+                "total_count": 10,
+                "valid_count": 10,
+                "exception_count": 0
+            }
+        }
+    }
+}
+INFO : 2022-08-10 02:52:52,798 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on deltalake_sql_file 
+INFO : 2022-08-10 02:52:52,798 : cdc_append : _deltalake_sql_file.py.load_schema: line(43) : Loading schema for dataset raw.cdc_append_customer from ./config/schema/deltalake/raw/cdc_append_customer.sql using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 02:52:52,798 : cdc_append : _writer.py.__init__: line(40) : auto_io = True automatically creating or altering delta table raw.cdc_append_customer
+INFO : 2022-08-10 02:52:52,798 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `raw`
+INFO : 2022-08-10 02:52:52,897 : cdc_append : _writer.py.create_or_alter_table: line(88) : Table already exists raw.cdc_append_customer at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer
+INFO : 2022-08-10 02:52:52,897 : cdc_append : _delta_lake.py.get_table_properties: line(69) : getting existing table properties for table raw.cdc_append_customer
+INFO : 2022-08-10 02:52:58,557 : cdc_append : _delta_lake.py.get_table_properties: line(91) : {
+    "raw.cdc_append_customer": {
+        "constraints": {
+            "amount_lower_bound": "amount > - 1000",
+            "amount_upper_bound": "amount < 1000000"
+        },
+        "properties": {
+            "Type": "EXTERNAL",
+            "delta.appendOnly": "False",
+            "delta.checkpoint.writeStatsAsJson": "True",
+            "delta.compatibility.symlinkFormatManifest.enabled": "False",
+            "delta.dataSkippingNumIndexedCols": "-1",
+            "delta.deletedFileRetentionDuration": "interval 1 week",
+            "delta.enableChangeDataFeed": "True",
+            "delta.logRetentionDuration": "interval 30 days",
+            "delta.minReaderVersion": "1",
+            "delta.minWriterVersion": "4",
+            "delta.randomPrefixLength": "2",
+            "delta.randomizeFilePrefixes": "False",
+            "external": "true"
+        }
+    }
+}
+INFO : 2022-08-10 02:53:06,549 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on deltalake_sql_file 
+INFO : 2022-08-10 02:53:06,550 : cdc_append : _deltalake_sql_file.py.load_schema: line(43) : Loading schema for dataset raw.cdc_append_customer_history from ./config/schema/deltalake/raw/cdc_append_customer_history.sql using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 02:53:06,550 : cdc_append : _writer.py.__init__: line(40) : auto_io = True automatically creating or altering delta table raw.cdc_append_customer_history
+INFO : 2022-08-10 02:53:06,550 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `raw`
+INFO : 2022-08-10 02:53:06,602 : cdc_append : _writer.py.create_or_alter_table: line(88) : Table already exists raw.cdc_append_customer_history at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer_history
+INFO : 2022-08-10 02:53:06,602 : cdc_append : _delta_lake.py.get_table_properties: line(69) : getting existing table properties for table raw.cdc_append_customer_history
+INFO : 2022-08-10 02:53:08,717 : cdc_append : _delta_lake.py.get_table_properties: line(91) : {
+    "raw.cdc_append_customer_history": {
+        "constraints": {
+            "amount_lower_bound": "amount > - 1000",
+            "amount_upper_bound": "amount < 1000000"
+        },
+        "properties": {
+            "Type": "EXTERNAL",
+            "delta.appendOnly": "False",
+            "delta.checkpoint.writeStatsAsJson": "True",
+            "delta.compatibility.symlinkFormatManifest.enabled": "False",
+            "delta.dataSkippingNumIndexedCols": "-1",
+            "delta.deletedFileRetentionDuration": "interval 1 week",
+            "delta.enableChangeDataFeed": "True",
+            "delta.logRetentionDuration": "interval 30 days",
+            "delta.minReaderVersion": "1",
+            "delta.minWriterVersion": "4",
+            "delta.randomPrefixLength": "2",
+            "delta.randomizeFilePrefixes": "False",
+            "external": "true"
+        }
+    }
+}
+INFO : 2022-08-10 02:53:15,428 : cdc_append : _framework.py.wrap_function: line(36) : Executing Dataflow cdc_append with:
+                timeslice=2022-08-01 00:00:00.000000 
+                retries=1 
+                save_type=DefaultSave
+INFO : 2022-08-10 02:53:15,463 : cdc_append : cdc_append.py.cdc_append: line(30) : Fetched dst delta table raw.cdc_append_customer from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer
+INFO : 2022-08-10 02:53:15,477 : cdc_append : cdc_append.py.cdc_append: line(37) : Fetched dst delta table raw.cdc_append_customer_history from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer_history
+INFO : 2022-08-10 02:53:15,571 : cdc_append : cdc_append.py.cdc_append: line(59) : Change set
++---+-------------------+---------+-------+
+|id |extract_date       |load_flag|version|
++---+-------------------+---------+-------+
+|1  |2008-01-01 00:00:00|I        |4      |
+|1  |2008-01-02 00:00:00|U        |3      |
+|1  |2008-01-03 00:00:00|U        |2      |
+|1  |2008-01-04 00:00:00|U        |1      |
+|2  |2008-01-01 00:00:00|I        |2      |
+|2  |2008-01-02 00:00:00|U        |1      |
+|3  |2008-01-01 00:00:00|I        |3      |
+|3  |2008-01-02 00:00:00|D        |2      |
+|3  |2008-01-03 00:00:00|I        |1      |
+|4  |2008-01-01 00:00:00|I        |1      |
+|5  |2008-01-01 00:00:00|I        |1      |
+|6  |2008-01-01 00:00:00|I        |1      |
+|7  |2008-01-01 00:00:00|I        |2      |
+|7  |2008-01-04 00:00:00|D        |1      |
+|8  |2008-01-01 00:00:00|I        |3      |
+|8  |2008-01-03 00:00:00|U        |2      |
+|8  |2008-01-04 00:00:00|U        |1      |
+|9  |2008-01-01 00:00:00|I        |2      |
+|9  |2008-01-03 00:00:00|D        |1      |
+|10 |2008-01-01 00:00:00|I        |2      |
++---+-------------------+---------+-------+
+only showing top 20 rows
+
+INFO : 2022-08-10 02:53:17,040 : cdc_append : cdc_append.py.cdc_append: line(109) : Existing History
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+|extract_date|load_flag|id |first_name|last_name|email|gender|job_title|amount|_correlation_id|_load_timestamp|_filename|
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+
+INFO : 2022-08-10 02:53:19,048 : cdc_append : cdc_append.py.cdc_append: line(111) : New History
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+|extract_date|load_flag|id |first_name|last_name|email|gender|job_title|amount|_correlation_id|_load_timestamp|_filename|
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+
+INFO : 2022-08-10 02:53:28,408 : cdc_append : cdc_append.py.cdc_append: line(142) : Current
++-------------------+---------+---+----------+---------------+-----------------------------+------+--------------------+------+------------------------------------+--------------------------+-----------------------------------------------------------------------------------------------+
+|extract_date       |load_flag|id |first_name|last_name      |email                        |gender|job_title           |amount|_correlation_id                     |_load_timestamp           |_filename                                                                                      |
++-------------------+---------+---+----------+---------------+-----------------------------+------+--------------------+------+------------------------------------+--------------------------+-----------------------------------------------------------------------------------------------+
+|2008-01-01 00:00:00|I        |4  |Pascale   |Jedrzaszkiewicz|pjedrzaszkiewicz3@auda.org.au|Male  |Safety Technician IV|73.21 |5da2587b-1940-447c-86ff-815ac4452dcf|2022-08-10 02:52:52.249339|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |5  |Sara      |Whiterod       |swhiterod4@hhs.gov           |Female|Assistant Manager   |47.85 |5da2587b-1940-447c-86ff-815ac4452dcf|2022-08-10 02:52:52.249339|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |6  |Mariska   |Antrum         |mantrum5@nytimes.com         |Female|Tax Accountant      |16.37 |5da2587b-1940-447c-86ff-815ac4452dcf|2022-08-10 02:52:52.249339|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
++-------------------+---------+---+----------+---------------+-----------------------------+------+--------------------+------+------------------------------------+--------------------------+-----------------------------------------------------------------------------------------------+
+
+INFO : 2022-08-10 02:53:35,138 : cdc_append : cdc_append.py.cdc_append: line(156) : raw.cdc_append_customer
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|extract_date       |load_flag|id |first_name|last_name      |email                        |gender    |job_title              |amount |_correlation_id                     |_load_timestamp          |_filename                                                                                      |
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|2008-01-04 00:00:00|U        |1  |David     |Legier         |dlegier0@mail.ru             |Agender   |Super Hero             |86.5   |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-02 00:00:00|U        |2  |Panchito  |Scirman        |pscirman1@kickstarter.com    |Female    |Senior Executive       |36.18  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|I        |3  |Chic      |Ickowics       |wowiback@booking.com         |Male      |Research Associate     |35.54  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |4  |Pascale   |Jedrzaszkiewicz|pjedrzaszkiewicz3@auda.org.au|Male      |Safety Technician IV   |73.21  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |5  |Sara      |Whiterod       |swhiterod4@hhs.gov           |Female    |Assistant Manager      |47.85  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |6  |Mariska   |Antrum         |mantrum5@nytimes.com         |Female    |Tax Accountant         |16.37  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-04 00:00:00|U        |8  |Anstice   |Hollingdale    |ahollingdale7@yahoo.co.jp    |Female    |Profit Accountant      |21.94  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-03 00:00:00|U        |10 |Blinni    |Blimey         |bfenty9@paginegialle.it      |Female    |Assistant Media Planner|38.98  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-04 00:00:00|U        |11 |Tom       |Jerry          |dlegier0@mail.ru             |Agender   |PM of England          |10000.5|345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-03 00:00:00|U        |12 |Panchito  |Scirman        |pscirman1@failedstarter.com  |Male      |Junior Executive       |36.18  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|I        |15 |Sara      |Whiterod       |swhiterod4@hhs.gov           |Female    |Assistant Manager      |47.85  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|I        |16 |Mariska   |Antrum         |mantrum5@nytimes.com         |Female    |Tax Accountant         |16.37  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-04 00:00:00|I        |17 |Ingemar   |Petrus         |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |18 |Anstice   |Hollingdale    |ahollingdale7@yahoo.co.jp    |Female    |Cost Accountant        |21.94  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |19 |Chaunce   |Holdforth      |choldforth8@ca.gov           |Non-binary|Chief Design Engineer  |72.0   |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |20 |Blinni    |Fenty          |bfenty9@paginegialle.it      |Female    |Assistant Media Planner|38.98  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+
+INFO : 2022-08-10 02:53:35,589 : cdc_append : cdc_append.py.cdc_append: line(159) : raw.cdc_append_customer_history
++-------------------+---------+---+----------+-----------------+-----------------------------+----------+-----------------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|extract_date       |load_flag|id |first_name|last_name        |email                        |gender    |job_title              |amount|_correlation_id                     |_load_timestamp          |_filename                                                                                      |
++-------------------+---------+---+----------+-----------------+-----------------------------+----------+-----------------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|2008-01-01 00:00:00|I        |1  |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Editor                 |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-02 00:00:00|U        |1  |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Super Hero             |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|U        |1  |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Super Villain          |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |2  |Panchito  |Scirman          |pscirman1@kickstarter.com    |Male      |Junior Executive       |36.18 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |3  |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |35.54 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-02 00:00:00|D        |3  |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |35.54 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-01 00:00:00|I        |7  |Ingemar   |Petrus           |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-04 00:00:00|D        |7  |Ingemar   |Petrus           |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-01 00:00:00|I        |8  |Anstice   |Hollingdale      |ahollingdale7@yahoo.co.jp    |Female    |Cost Accountant        |21.94 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-03 00:00:00|U        |8  |Anstice   |Hollingdale Sauce|ahollingdale7@yahoo.co.jp    |Female    |Cost Accountant        |21.94 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |9  |Chaunce   |Holdforth        |choldforth8@ca.gov           |Non-binary|Chief Design Engineer  |72.0  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-03 00:00:00|D        |9  |Chaunce   |Holdforth        |choldforth8@ca.gov           |Non-binary|Chief Design Engineer  |72.0  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |10 |Blinni    |Fenty            |bfenty9@paginegialle.it      |Female    |Assistant Media Planner|38.98 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-02 00:00:00|I        |11 |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Editor                 |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|U        |11 |Tom       |Jerry            |dlegier0@mail.ru             |Agender   |Editor                 |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-02 00:00:00|I        |12 |Panchito  |Scirman          |pscirman1@kickstarter.com    |Male      |Junior Executive       |36.18 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-02 00:00:00|I        |13 |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |35.54 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|D        |13 |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |100.0 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-02 00:00:00|I        |14 |Pascale   |Jedrzaszkiewicz  |pjedrzaszkiewicz3@auda.org.au|Male      |Safety Technician IV   |73.21 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-04 00:00:00|D        |14 |Pascale   |Jedrzaszkiewicz  |pjedrzaszkiewicz3@auda.org.au|Male      |Safety Technician IV   |73.21 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
++-------------------+---------+---+----------+-----------------+-----------------------------+----------+-----------------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+only showing top 20 rows
+
+INFO : 2022-08-10 02:53:36,052 : cdc_append : _delta_lake.py.get_audit: line(34) : Auditing database table raw.cdc_append_customer
+INFO : 2022-08-10 02:53:36,634 : cdc_append : _delta_lake.py.get_audit: line(34) : Auditing database table raw.cdc_append_customer_history
+INFO : 2022-08-10 02:53:36,966 : cdc_append : _delta_lake.py.get_audits: line(48) : {
+    "raw.cdc_append_customer": {
+        "clusterId": null,
+        "engineInfo": "Apache-Spark/3.2.1 Delta-Lake/2.0.0",
+        "isBlindAppend": false,
+        "isolationLevel": "Serializable",
+        "job": null,
+        "notebook": null,
+        "operation": "MERGE",
+        "operationMetrics": {
+            "executionTimeMs": "3407",
+            "numOutputRows": "16",
+            "numSourceRows": "3",
+            "numTargetChangeFilesAdded": "0",
+            "numTargetFilesAdded": "1",
+            "numTargetFilesRemoved": "1",
+            "numTargetRowsCopied": "16",
+            "numTargetRowsDeleted": "0",
+            "numTargetRowsInserted": "0",
+            "numTargetRowsUpdated": "0",
+            "rewriteTimeMs": "1791",
+            "scanTimeMs": "1610"
+        },
+        "operationParameters": {
+            "matchedPredicates": "[{\"predicate\":\"((src.load_flag IN ('I', 'U')) AND (src.extract_date > dst.extract_date))\",\"actionType\":\"update\"},{\"predicate\":\"(src.load_flag IN ('D'))\",\"actionType\":\"delete\"}]",
+            "notMatchedPredicates": "[{\"predicate\":\"(src.load_flag IN ('I', 'U'))\",\"actionType\":\"insert\"}]",
+            "predicate": "(src.id = dst.id)"
+        },
+        "readVersion": 23,
+        "timestamp": "2022-08-10 02:53:32.958000",
+        "userId": null,
+        "userMetadata": null,
+        "userName": null,
+        "version": 24
+    },
+    "raw.cdc_append_customer_history": {
+        "clusterId": null,
+        "engineInfo": "Apache-Spark/3.2.1 Delta-Lake/2.0.0",
+        "isBlindAppend": false,
+        "isolationLevel": "Serializable",
+        "job": null,
+        "notebook": null,
+        "operation": "WRITE",
+        "operationMetrics": {
+            "numFiles": "1",
+            "numOutputBytes": "1312",
+            "numOutputRows": "0"
+        },
+        "operationParameters": {
+            "mode": "Append",
+            "partitionBy": "[]"
+        },
+        "readVersion": 29,
+        "timestamp": "2022-08-10 02:53:25.970000",
+        "userId": null,
+        "userMetadata": null,
+        "userName": null,
+        "version": 30
+    }
+}
+INFO : 2022-08-10 02:53:36,966 : cdc_append : _config_provider.py.load_config: line(41) : Loading Dataflow configuration from file /Users/shaunryan/AzureDevOps/yetl-patterns/config/pipeline/local/config.yaml
+INFO : 2022-08-10 02:53:36,969 : cdc_append : _context.py._get_spark_context: line(85) : Setting spark context
+INFO : 2022-08-10 02:53:37,004 : cdc_append : _context.py.__init__: line(50) : Setting application context spark logger at level ERROR
+INFO : 2022-08-10 02:53:37,007 : cdc_append : _factory.py.get_file_system_type: line(50) : Setting filestystem using protocol file:
+INFO : 2022-08-10 02:53:37,008 : cdc_append : _context.py.__init__: line(66) : Setting application context dataflow cdc_append
+INFO : 2022-08-10 02:53:37,008 : cdc_append : _config_provider.py.load_pipeline_config: line(29) : Loading Dataflow configuration from file /Users/shaunryan/AzureDevOps/yetl-patterns/config/pipeline/local/cdc_append.yaml
+INFO : 2022-08-10 02:53:37,021 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on spark_schema_file 
+INFO : 2022-08-10 02:53:37,021 : cdc_append : _spark_file_schema_repo.py.load_schema: line(50) : Loading schema for dataset landing.cdc_customer from /Users/shaunryan/AzureDevOps/yetl-patterns/config/schema/spark/landing/cdc_customer.yaml using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 02:53:37,028 : cdc_append : _reader.py.__init__: line(49) : auto_io = True automatically creating or altering exception delta table landing.cdc_customer _correlation_id=ab4e75b4-4081-4485-8fd2-4a81741aa439
+INFO : 2022-08-10 02:53:37,028 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `landing`
+INFO : 2022-08-10 02:53:37,098 : cdc_append : _reader.py.create_or_alter_table: line(61) : Exception table already exists landing.exceptions at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/exceptions/landing/exceptions _correlation_id=ab4e75b4-4081-4485-8fd2-4a81741aa439
+INFO : 2022-08-10 02:53:37,098 : cdc_append : _reader.py.read: line(195) : Reading data for landing.cdc_customer from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv with options {'mode': 'PERMISSIVE', 'inferSchema': False, 'header': True, 'timestampFormat': 'yyyy-MM-dd HH:mm:ss'} _correlation_id=ab4e75b4-4081-4485-8fd2-4a81741aa439
+INFO : 2022-08-10 02:53:37,119 : cdc_append : _reader.py.validate: line(181) : Validating dataframe read using PERMISSIVE corrupt column at _corrupt_record _correlation_id=ab4e75b4-4081-4485-8fd2-4a81741aa439
+INFO : 2022-08-10 02:53:37,370 : cdc_append : _reader.py.validate: line(192) : {
+    "validation": {
+        "schema_on_read": {
+            "landing.cdc_customer": {
+                "total_count": 7,
+                "valid_count": 7,
+                "exception_count": 0
+            }
+        }
+    }
+}
+INFO : 2022-08-10 02:53:37,370 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on deltalake_sql_file 
+INFO : 2022-08-10 02:53:37,371 : cdc_append : _deltalake_sql_file.py.load_schema: line(43) : Loading schema for dataset raw.cdc_append_customer from ./config/schema/deltalake/raw/cdc_append_customer.sql using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 02:53:37,371 : cdc_append : _writer.py.__init__: line(40) : auto_io = True automatically creating or altering delta table raw.cdc_append_customer
+INFO : 2022-08-10 02:53:37,371 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `raw`
+INFO : 2022-08-10 02:53:37,417 : cdc_append : _writer.py.create_or_alter_table: line(88) : Table already exists raw.cdc_append_customer at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer
+INFO : 2022-08-10 02:53:37,417 : cdc_append : _delta_lake.py.get_table_properties: line(69) : getting existing table properties for table raw.cdc_append_customer
+INFO : 2022-08-10 02:53:37,469 : cdc_append : _delta_lake.py.get_table_properties: line(91) : {
+    "raw.cdc_append_customer": {
+        "constraints": {
+            "amount_lower_bound": "amount > - 1000",
+            "amount_upper_bound": "amount < 1000000"
+        },
+        "properties": {
+            "Type": "EXTERNAL",
+            "delta.appendOnly": "False",
+            "delta.checkpoint.writeStatsAsJson": "True",
+            "delta.compatibility.symlinkFormatManifest.enabled": "False",
+            "delta.dataSkippingNumIndexedCols": "-1",
+            "delta.deletedFileRetentionDuration": "interval 1 week",
+            "delta.enableChangeDataFeed": "True",
+            "delta.logRetentionDuration": "interval 30 days",
+            "delta.minReaderVersion": "1",
+            "delta.minWriterVersion": "4",
+            "delta.randomPrefixLength": "2",
+            "delta.randomizeFilePrefixes": "False",
+            "external": "true"
+        }
+    }
+}
+INFO : 2022-08-10 02:53:43,301 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on deltalake_sql_file 
+INFO : 2022-08-10 02:53:43,301 : cdc_append : _deltalake_sql_file.py.load_schema: line(43) : Loading schema for dataset raw.cdc_append_customer_history from ./config/schema/deltalake/raw/cdc_append_customer_history.sql using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 02:53:43,301 : cdc_append : _writer.py.__init__: line(40) : auto_io = True automatically creating or altering delta table raw.cdc_append_customer_history
+INFO : 2022-08-10 02:53:43,301 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `raw`
+INFO : 2022-08-10 02:53:43,337 : cdc_append : _writer.py.create_or_alter_table: line(88) : Table already exists raw.cdc_append_customer_history at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer_history
+INFO : 2022-08-10 02:53:43,338 : cdc_append : _delta_lake.py.get_table_properties: line(69) : getting existing table properties for table raw.cdc_append_customer_history
+INFO : 2022-08-10 02:53:43,364 : cdc_append : _delta_lake.py.get_table_properties: line(91) : {
+    "raw.cdc_append_customer_history": {
+        "constraints": {
+            "amount_lower_bound": "amount > - 1000",
+            "amount_upper_bound": "amount < 1000000"
+        },
+        "properties": {
+            "Type": "EXTERNAL",
+            "delta.appendOnly": "False",
+            "delta.checkpoint.writeStatsAsJson": "True",
+            "delta.compatibility.symlinkFormatManifest.enabled": "False",
+            "delta.dataSkippingNumIndexedCols": "-1",
+            "delta.deletedFileRetentionDuration": "interval 1 week",
+            "delta.enableChangeDataFeed": "True",
+            "delta.logRetentionDuration": "interval 30 days",
+            "delta.minReaderVersion": "1",
+            "delta.minWriterVersion": "4",
+            "delta.randomPrefixLength": "2",
+            "delta.randomizeFilePrefixes": "False",
+            "external": "true"
+        }
+    }
+}
+INFO : 2022-08-10 02:53:48,722 : cdc_append : _framework.py.wrap_function: line(36) : Executing Dataflow cdc_append with:
+                timeslice=2022-08-02 00:00:00.000000 
+                retries=1 
+                save_type=DefaultSave
+INFO : 2022-08-10 02:53:48,736 : cdc_append : cdc_append.py.cdc_append: line(30) : Fetched dst delta table raw.cdc_append_customer from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer
+INFO : 2022-08-10 02:53:48,746 : cdc_append : cdc_append.py.cdc_append: line(37) : Fetched dst delta table raw.cdc_append_customer_history from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer_history
+INFO : 2022-08-10 02:53:48,797 : cdc_append : cdc_append.py.cdc_append: line(59) : Change set
++---+-------------------+---------+-------+
+|id |extract_date       |load_flag|version|
++---+-------------------+---------+-------+
+|1  |2008-01-01 00:00:00|I        |4      |
+|1  |2008-01-02 00:00:00|U        |3      |
+|1  |2008-01-03 00:00:00|U        |2      |
+|1  |2008-01-04 00:00:00|U        |1      |
+|2  |2008-01-01 00:00:00|I        |2      |
+|2  |2008-01-02 00:00:00|U        |1      |
+|3  |2008-01-01 00:00:00|I        |3      |
+|3  |2008-01-02 00:00:00|D        |2      |
+|3  |2008-01-03 00:00:00|I        |1      |
+|11 |2008-01-02 00:00:00|I        |3      |
+|11 |2008-01-03 00:00:00|U        |2      |
+|11 |2008-01-04 00:00:00|U        |1      |
+|12 |2008-01-02 00:00:00|I        |2      |
+|12 |2008-01-03 00:00:00|U        |1      |
+|13 |2008-01-02 00:00:00|I        |2      |
+|13 |2008-01-03 00:00:00|D        |1      |
+|14 |2008-01-02 00:00:00|I        |2      |
+|14 |2008-01-04 00:00:00|D        |1      |
++---+-------------------+---------+-------+
+
+INFO : 2022-08-10 02:53:49,757 : cdc_append : cdc_append.py.cdc_append: line(109) : Existing History
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+|extract_date|load_flag|id |first_name|last_name|email|gender|job_title|amount|_correlation_id|_load_timestamp|_filename|
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+
+INFO : 2022-08-10 02:53:51,239 : cdc_append : cdc_append.py.cdc_append: line(111) : New History
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+|extract_date|load_flag|id |first_name|last_name|email|gender|job_title|amount|_correlation_id|_load_timestamp|_filename|
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+
+INFO : 2022-08-10 02:53:58,496 : cdc_append : cdc_append.py.cdc_append: line(142) : Current
++-------------------+---------+---+----------+---------+-------------------------+------+----------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|extract_date       |load_flag|id |first_name|last_name|email                    |gender|job_title       |amount|_correlation_id                     |_load_timestamp          |_filename                                                                                      |
++-------------------+---------+---+----------+---------+-------------------------+------+----------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|2008-01-02 00:00:00|U        |2  |Panchito  |Scirman  |pscirman1@kickstarter.com|Female|Senior Executive|36.18 |ab4e75b4-4081-4485-8fd2-4a81741aa439|2022-08-10 02:53:37.18537|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
++-------------------+---------+---+----------+---------+-------------------------+------+----------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+
+INFO : 2022-08-10 02:54:03,623 : cdc_append : cdc_append.py.cdc_append: line(156) : raw.cdc_append_customer
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|extract_date       |load_flag|id |first_name|last_name      |email                        |gender    |job_title              |amount |_correlation_id                     |_load_timestamp          |_filename                                                                                      |
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|2008-01-04 00:00:00|U        |1  |David     |Legier         |dlegier0@mail.ru             |Agender   |Super Hero             |86.5   |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-02 00:00:00|U        |2  |Panchito  |Scirman        |pscirman1@kickstarter.com    |Female    |Senior Executive       |36.18  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|I        |3  |Chic      |Ickowics       |wowiback@booking.com         |Male      |Research Associate     |35.54  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |4  |Pascale   |Jedrzaszkiewicz|pjedrzaszkiewicz3@auda.org.au|Male      |Safety Technician IV   |73.21  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |5  |Sara      |Whiterod       |swhiterod4@hhs.gov           |Female    |Assistant Manager      |47.85  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |6  |Mariska   |Antrum         |mantrum5@nytimes.com         |Female    |Tax Accountant         |16.37  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-04 00:00:00|U        |8  |Anstice   |Hollingdale    |ahollingdale7@yahoo.co.jp    |Female    |Profit Accountant      |21.94  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-03 00:00:00|U        |10 |Blinni    |Blimey         |bfenty9@paginegialle.it      |Female    |Assistant Media Planner|38.98  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-04 00:00:00|U        |11 |Tom       |Jerry          |dlegier0@mail.ru             |Agender   |PM of England          |10000.5|345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-03 00:00:00|U        |12 |Panchito  |Scirman        |pscirman1@failedstarter.com  |Male      |Junior Executive       |36.18  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|I        |15 |Sara      |Whiterod       |swhiterod4@hhs.gov           |Female    |Assistant Manager      |47.85  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|I        |16 |Mariska   |Antrum         |mantrum5@nytimes.com         |Female    |Tax Accountant         |16.37  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-04 00:00:00|I        |17 |Ingemar   |Petrus         |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |18 |Anstice   |Hollingdale    |ahollingdale7@yahoo.co.jp    |Female    |Cost Accountant        |21.94  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |19 |Chaunce   |Holdforth      |choldforth8@ca.gov           |Non-binary|Chief Design Engineer  |72.0   |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |20 |Blinni    |Fenty          |bfenty9@paginegialle.it      |Female    |Assistant Media Planner|38.98  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+
+INFO : 2022-08-10 02:54:03,966 : cdc_append : cdc_append.py.cdc_append: line(159) : raw.cdc_append_customer_history
++-------------------+---------+---+----------+-----------------+-----------------------------+----------+-----------------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|extract_date       |load_flag|id |first_name|last_name        |email                        |gender    |job_title              |amount|_correlation_id                     |_load_timestamp          |_filename                                                                                      |
++-------------------+---------+---+----------+-----------------+-----------------------------+----------+-----------------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|2008-01-01 00:00:00|I        |1  |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Editor                 |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-02 00:00:00|U        |1  |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Super Hero             |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|U        |1  |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Super Villain          |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |2  |Panchito  |Scirman          |pscirman1@kickstarter.com    |Male      |Junior Executive       |36.18 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |3  |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |35.54 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-02 00:00:00|D        |3  |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |35.54 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-01 00:00:00|I        |7  |Ingemar   |Petrus           |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-04 00:00:00|D        |7  |Ingemar   |Petrus           |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-01 00:00:00|I        |8  |Anstice   |Hollingdale      |ahollingdale7@yahoo.co.jp    |Female    |Cost Accountant        |21.94 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-03 00:00:00|U        |8  |Anstice   |Hollingdale Sauce|ahollingdale7@yahoo.co.jp    |Female    |Cost Accountant        |21.94 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |9  |Chaunce   |Holdforth        |choldforth8@ca.gov           |Non-binary|Chief Design Engineer  |72.0  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-03 00:00:00|D        |9  |Chaunce   |Holdforth        |choldforth8@ca.gov           |Non-binary|Chief Design Engineer  |72.0  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |10 |Blinni    |Fenty            |bfenty9@paginegialle.it      |Female    |Assistant Media Planner|38.98 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-02 00:00:00|I        |11 |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Editor                 |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|U        |11 |Tom       |Jerry            |dlegier0@mail.ru             |Agender   |Editor                 |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-02 00:00:00|I        |12 |Panchito  |Scirman          |pscirman1@kickstarter.com    |Male      |Junior Executive       |36.18 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-02 00:00:00|I        |13 |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |35.54 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|D        |13 |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |100.0 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-02 00:00:00|I        |14 |Pascale   |Jedrzaszkiewicz  |pjedrzaszkiewicz3@auda.org.au|Male      |Safety Technician IV   |73.21 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-04 00:00:00|D        |14 |Pascale   |Jedrzaszkiewicz  |pjedrzaszkiewicz3@auda.org.au|Male      |Safety Technician IV   |73.21 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
++-------------------+---------+---+----------+-----------------+-----------------------------+----------+-----------------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+only showing top 20 rows
+
+INFO : 2022-08-10 02:54:04,312 : cdc_append : _delta_lake.py.get_audit: line(34) : Auditing database table raw.cdc_append_customer
+INFO : 2022-08-10 02:54:04,598 : cdc_append : _delta_lake.py.get_audit: line(34) : Auditing database table raw.cdc_append_customer_history
+INFO : 2022-08-10 02:54:04,822 : cdc_append : _delta_lake.py.get_audits: line(48) : {
+    "raw.cdc_append_customer": {
+        "clusterId": null,
+        "engineInfo": "Apache-Spark/3.2.1 Delta-Lake/2.0.0",
+        "isBlindAppend": false,
+        "isolationLevel": "Serializable",
+        "job": null,
+        "notebook": null,
+        "operation": "MERGE",
+        "operationMetrics": {
+            "executionTimeMs": "2477",
+            "numOutputRows": "16",
+            "numSourceRows": "1",
+            "numTargetChangeFilesAdded": "0",
+            "numTargetFilesAdded": "1",
+            "numTargetFilesRemoved": "1",
+            "numTargetRowsCopied": "16",
+            "numTargetRowsDeleted": "0",
+            "numTargetRowsInserted": "0",
+            "numTargetRowsUpdated": "0",
+            "rewriteTimeMs": "1290",
+            "scanTimeMs": "1182"
+        },
+        "operationParameters": {
+            "matchedPredicates": "[{\"predicate\":\"((src.load_flag IN ('I', 'U')) AND (src.extract_date > dst.extract_date))\",\"actionType\":\"update\"},{\"predicate\":\"(src.load_flag IN ('D'))\",\"actionType\":\"delete\"}]",
+            "notMatchedPredicates": "[{\"predicate\":\"(src.load_flag IN ('I', 'U'))\",\"actionType\":\"insert\"}]",
+            "predicate": "(src.id = dst.id)"
+        },
+        "readVersion": 27,
+        "timestamp": "2022-08-10 02:54:01.836000",
+        "userId": null,
+        "userMetadata": null,
+        "userName": null,
+        "version": 28
+    },
+    "raw.cdc_append_customer_history": {
+        "clusterId": null,
+        "engineInfo": "Apache-Spark/3.2.1 Delta-Lake/2.0.0",
+        "isBlindAppend": false,
+        "isolationLevel": "Serializable",
+        "job": null,
+        "notebook": null,
+        "operation": "WRITE",
+        "operationMetrics": {
+            "numFiles": "1",
+            "numOutputBytes": "1312",
+            "numOutputRows": "0"
+        },
+        "operationParameters": {
+            "mode": "Append",
+            "partitionBy": "[]"
+        },
+        "readVersion": 34,
+        "timestamp": "2022-08-10 02:53:56.901000",
+        "userId": null,
+        "userMetadata": null,
+        "userName": null,
+        "version": 35
+    }
+}
+INFO : 2022-08-10 02:54:04,822 : cdc_append : _config_provider.py.load_config: line(41) : Loading Dataflow configuration from file /Users/shaunryan/AzureDevOps/yetl-patterns/config/pipeline/local/config.yaml
+INFO : 2022-08-10 02:54:04,824 : cdc_append : _context.py._get_spark_context: line(85) : Setting spark context
+INFO : 2022-08-10 02:54:04,828 : cdc_append : _context.py.__init__: line(50) : Setting application context spark logger at level ERROR
+INFO : 2022-08-10 02:54:04,831 : cdc_append : _factory.py.get_file_system_type: line(50) : Setting filestystem using protocol file:
+INFO : 2022-08-10 02:54:04,831 : cdc_append : _context.py.__init__: line(66) : Setting application context dataflow cdc_append
+INFO : 2022-08-10 02:54:04,831 : cdc_append : _config_provider.py.load_pipeline_config: line(29) : Loading Dataflow configuration from file /Users/shaunryan/AzureDevOps/yetl-patterns/config/pipeline/local/cdc_append.yaml
+INFO : 2022-08-10 02:54:04,842 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on spark_schema_file 
+INFO : 2022-08-10 02:54:04,842 : cdc_append : _spark_file_schema_repo.py.load_schema: line(50) : Loading schema for dataset landing.cdc_customer from /Users/shaunryan/AzureDevOps/yetl-patterns/config/schema/spark/landing/cdc_customer.yaml using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 02:54:04,847 : cdc_append : _reader.py.__init__: line(49) : auto_io = True automatically creating or altering exception delta table landing.cdc_customer _correlation_id=805e12c8-5458-4741-8982-d24a4c6ef703
+INFO : 2022-08-10 02:54:04,847 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `landing`
+INFO : 2022-08-10 02:54:04,894 : cdc_append : _reader.py.create_or_alter_table: line(61) : Exception table already exists landing.exceptions at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/exceptions/landing/exceptions _correlation_id=805e12c8-5458-4741-8982-d24a4c6ef703
+INFO : 2022-08-10 02:54:04,894 : cdc_append : _reader.py.read: line(195) : Reading data for landing.cdc_customer from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv with options {'mode': 'PERMISSIVE', 'inferSchema': False, 'header': True, 'timestampFormat': 'yyyy-MM-dd HH:mm:ss'} _correlation_id=805e12c8-5458-4741-8982-d24a4c6ef703
+INFO : 2022-08-10 02:54:04,913 : cdc_append : _reader.py.validate: line(181) : Validating dataframe read using PERMISSIVE corrupt column at _corrupt_record _correlation_id=805e12c8-5458-4741-8982-d24a4c6ef703
+INFO : 2022-08-10 02:54:05,108 : cdc_append : _reader.py.validate: line(192) : {
+    "validation": {
+        "schema_on_read": {
+            "landing.cdc_customer": {
+                "total_count": 11,
+                "valid_count": 11,
+                "exception_count": 0
+            }
+        }
+    }
+}
+INFO : 2022-08-10 02:54:05,109 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on deltalake_sql_file 
+INFO : 2022-08-10 02:54:05,109 : cdc_append : _deltalake_sql_file.py.load_schema: line(43) : Loading schema for dataset raw.cdc_append_customer from ./config/schema/deltalake/raw/cdc_append_customer.sql using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 02:54:05,109 : cdc_append : _writer.py.__init__: line(40) : auto_io = True automatically creating or altering delta table raw.cdc_append_customer
+INFO : 2022-08-10 02:54:05,109 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `raw`
+INFO : 2022-08-10 02:54:05,139 : cdc_append : _writer.py.create_or_alter_table: line(88) : Table already exists raw.cdc_append_customer at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer
+INFO : 2022-08-10 02:54:05,139 : cdc_append : _delta_lake.py.get_table_properties: line(69) : getting existing table properties for table raw.cdc_append_customer
+INFO : 2022-08-10 02:54:05,169 : cdc_append : _delta_lake.py.get_table_properties: line(91) : {
+    "raw.cdc_append_customer": {
+        "constraints": {
+            "amount_lower_bound": "amount > - 1000",
+            "amount_upper_bound": "amount < 1000000"
+        },
+        "properties": {
+            "Type": "EXTERNAL",
+            "delta.appendOnly": "False",
+            "delta.checkpoint.writeStatsAsJson": "True",
+            "delta.compatibility.symlinkFormatManifest.enabled": "False",
+            "delta.dataSkippingNumIndexedCols": "-1",
+            "delta.deletedFileRetentionDuration": "interval 1 week",
+            "delta.enableChangeDataFeed": "True",
+            "delta.logRetentionDuration": "interval 30 days",
+            "delta.minReaderVersion": "1",
+            "delta.minWriterVersion": "4",
+            "delta.randomPrefixLength": "2",
+            "delta.randomizeFilePrefixes": "False",
+            "external": "true"
+        }
+    }
+}
+INFO : 2022-08-10 02:54:10,876 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on deltalake_sql_file 
+INFO : 2022-08-10 02:54:10,876 : cdc_append : _deltalake_sql_file.py.load_schema: line(43) : Loading schema for dataset raw.cdc_append_customer_history from ./config/schema/deltalake/raw/cdc_append_customer_history.sql using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 02:54:10,876 : cdc_append : _writer.py.__init__: line(40) : auto_io = True automatically creating or altering delta table raw.cdc_append_customer_history
+INFO : 2022-08-10 02:54:10,876 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `raw`
+INFO : 2022-08-10 02:54:10,908 : cdc_append : _writer.py.create_or_alter_table: line(88) : Table already exists raw.cdc_append_customer_history at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer_history
+INFO : 2022-08-10 02:54:10,908 : cdc_append : _delta_lake.py.get_table_properties: line(69) : getting existing table properties for table raw.cdc_append_customer_history
+INFO : 2022-08-10 02:54:10,930 : cdc_append : _delta_lake.py.get_table_properties: line(91) : {
+    "raw.cdc_append_customer_history": {
+        "constraints": {
+            "amount_lower_bound": "amount > - 1000",
+            "amount_upper_bound": "amount < 1000000"
+        },
+        "properties": {
+            "Type": "EXTERNAL",
+            "delta.appendOnly": "False",
+            "delta.checkpoint.writeStatsAsJson": "True",
+            "delta.compatibility.symlinkFormatManifest.enabled": "False",
+            "delta.dataSkippingNumIndexedCols": "-1",
+            "delta.deletedFileRetentionDuration": "interval 1 week",
+            "delta.enableChangeDataFeed": "True",
+            "delta.logRetentionDuration": "interval 30 days",
+            "delta.minReaderVersion": "1",
+            "delta.minWriterVersion": "4",
+            "delta.randomPrefixLength": "2",
+            "delta.randomizeFilePrefixes": "False",
+            "external": "true"
+        }
+    }
+}
+INFO : 2022-08-10 02:54:16,066 : cdc_append : _framework.py.wrap_function: line(36) : Executing Dataflow cdc_append with:
+                timeslice=2022-08-03 00:00:00.000000 
+                retries=1 
+                save_type=DefaultSave
+INFO : 2022-08-10 02:54:16,080 : cdc_append : cdc_append.py.cdc_append: line(30) : Fetched dst delta table raw.cdc_append_customer from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer
+INFO : 2022-08-10 02:54:16,091 : cdc_append : cdc_append.py.cdc_append: line(37) : Fetched dst delta table raw.cdc_append_customer_history from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer_history
+INFO : 2022-08-10 02:54:16,140 : cdc_append : cdc_append.py.cdc_append: line(59) : Change set
++---+-------------------+---------+-------+
+|id |extract_date       |load_flag|version|
++---+-------------------+---------+-------+
+|1  |2008-01-01 00:00:00|I        |4      |
+|1  |2008-01-02 00:00:00|U        |3      |
+|1  |2008-01-03 00:00:00|U        |2      |
+|1  |2008-01-04 00:00:00|U        |1      |
+|3  |2008-01-01 00:00:00|I        |3      |
+|3  |2008-01-02 00:00:00|D        |2      |
+|3  |2008-01-03 00:00:00|I        |1      |
+|8  |2008-01-01 00:00:00|I        |3      |
+|8  |2008-01-03 00:00:00|U        |2      |
+|8  |2008-01-04 00:00:00|U        |1      |
+|9  |2008-01-01 00:00:00|I        |2      |
+|9  |2008-01-03 00:00:00|D        |1      |
+|10 |2008-01-01 00:00:00|I        |2      |
+|10 |2008-01-03 00:00:00|U        |1      |
+|11 |2008-01-02 00:00:00|I        |3      |
+|11 |2008-01-03 00:00:00|U        |2      |
+|11 |2008-01-04 00:00:00|U        |1      |
+|12 |2008-01-02 00:00:00|I        |2      |
+|12 |2008-01-03 00:00:00|U        |1      |
+|13 |2008-01-02 00:00:00|I        |2      |
++---+-------------------+---------+-------+
+only showing top 20 rows
+
+INFO : 2022-08-10 02:54:17,014 : cdc_append : cdc_append.py.cdc_append: line(109) : Existing History
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+|extract_date|load_flag|id |first_name|last_name|email|gender|job_title|amount|_correlation_id|_load_timestamp|_filename|
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+
+INFO : 2022-08-10 02:54:18,349 : cdc_append : cdc_append.py.cdc_append: line(111) : New History
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+|extract_date|load_flag|id |first_name|last_name|email|gender|job_title|amount|_correlation_id|_load_timestamp|_filename|
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+
+INFO : 2022-08-10 02:54:25,806 : cdc_append : cdc_append.py.cdc_append: line(142) : Current
++-------------------+---------+---+----------+---------+---------------------------+----------+-----------------------+------+------------------------------------+--------------------------+-----------------------------------------------------------------------------------------------+
+|extract_date       |load_flag|id |first_name|last_name|email                      |gender    |job_title              |amount|_correlation_id                     |_load_timestamp           |_filename                                                                                      |
++-------------------+---------+---+----------+---------+---------------------------+----------+-----------------------+------+------------------------------------+--------------------------+-----------------------------------------------------------------------------------------------+
+|2008-01-03 00:00:00|I        |3  |Chic      |Ickowics |wowiback@booking.com       |Male      |Research Associate     |35.54 |805e12c8-5458-4741-8982-d24a4c6ef703|2022-08-10 02:54:04.963434|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|D        |9  |Chaunce   |Holdforth|choldforth8@ca.gov         |Non-binary|Chief Design Engineer  |72.0  |805e12c8-5458-4741-8982-d24a4c6ef703|2022-08-10 02:54:04.963434|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|U        |10 |Blinni    |Blimey   |bfenty9@paginegialle.it    |Female    |Assistant Media Planner|38.98 |805e12c8-5458-4741-8982-d24a4c6ef703|2022-08-10 02:54:04.963434|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|U        |12 |Panchito  |Scirman  |pscirman1@failedstarter.com|Male      |Junior Executive       |36.18 |805e12c8-5458-4741-8982-d24a4c6ef703|2022-08-10 02:54:04.963434|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|D        |13 |Chic      |Ickowics |cickowics2@booking.com     |Male      |Research Associate     |100.0 |805e12c8-5458-4741-8982-d24a4c6ef703|2022-08-10 02:54:04.963434|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|I        |15 |Sara      |Whiterod |swhiterod4@hhs.gov         |Female    |Assistant Manager      |47.85 |805e12c8-5458-4741-8982-d24a4c6ef703|2022-08-10 02:54:04.963434|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|I        |16 |Mariska   |Antrum   |mantrum5@nytimes.com       |Female    |Tax Accountant         |16.37 |805e12c8-5458-4741-8982-d24a4c6ef703|2022-08-10 02:54:04.963434|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
++-------------------+---------+---+----------+---------+---------------------------+----------+-----------------------+------+------------------------------------+--------------------------+-----------------------------------------------------------------------------------------------+
+
+INFO : 2022-08-10 02:54:30,803 : cdc_append : cdc_append.py.cdc_append: line(156) : raw.cdc_append_customer
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|extract_date       |load_flag|id |first_name|last_name      |email                        |gender    |job_title              |amount |_correlation_id                     |_load_timestamp          |_filename                                                                                      |
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|2008-01-04 00:00:00|U        |1  |David     |Legier         |dlegier0@mail.ru             |Agender   |Super Hero             |86.5   |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-02 00:00:00|U        |2  |Panchito  |Scirman        |pscirman1@kickstarter.com    |Female    |Senior Executive       |36.18  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|I        |3  |Chic      |Ickowics       |wowiback@booking.com         |Male      |Research Associate     |35.54  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |4  |Pascale   |Jedrzaszkiewicz|pjedrzaszkiewicz3@auda.org.au|Male      |Safety Technician IV   |73.21  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |5  |Sara      |Whiterod       |swhiterod4@hhs.gov           |Female    |Assistant Manager      |47.85  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |6  |Mariska   |Antrum         |mantrum5@nytimes.com         |Female    |Tax Accountant         |16.37  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-04 00:00:00|U        |8  |Anstice   |Hollingdale    |ahollingdale7@yahoo.co.jp    |Female    |Profit Accountant      |21.94  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-03 00:00:00|U        |10 |Blinni    |Blimey         |bfenty9@paginegialle.it      |Female    |Assistant Media Planner|38.98  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-04 00:00:00|U        |11 |Tom       |Jerry          |dlegier0@mail.ru             |Agender   |PM of England          |10000.5|345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-03 00:00:00|U        |12 |Panchito  |Scirman        |pscirman1@failedstarter.com  |Male      |Junior Executive       |36.18  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|I        |15 |Sara      |Whiterod       |swhiterod4@hhs.gov           |Female    |Assistant Manager      |47.85  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|I        |16 |Mariska   |Antrum         |mantrum5@nytimes.com         |Female    |Tax Accountant         |16.37  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-04 00:00:00|I        |17 |Ingemar   |Petrus         |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |18 |Anstice   |Hollingdale    |ahollingdale7@yahoo.co.jp    |Female    |Cost Accountant        |21.94  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |19 |Chaunce   |Holdforth      |choldforth8@ca.gov           |Non-binary|Chief Design Engineer  |72.0   |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |20 |Blinni    |Fenty          |bfenty9@paginegialle.it      |Female    |Assistant Media Planner|38.98  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+
+INFO : 2022-08-10 02:54:31,153 : cdc_append : cdc_append.py.cdc_append: line(159) : raw.cdc_append_customer_history
++-------------------+---------+---+----------+-----------------+-----------------------------+----------+-----------------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|extract_date       |load_flag|id |first_name|last_name        |email                        |gender    |job_title              |amount|_correlation_id                     |_load_timestamp          |_filename                                                                                      |
++-------------------+---------+---+----------+-----------------+-----------------------------+----------+-----------------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|2008-01-01 00:00:00|I        |1  |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Editor                 |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-02 00:00:00|U        |1  |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Super Hero             |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|U        |1  |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Super Villain          |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |2  |Panchito  |Scirman          |pscirman1@kickstarter.com    |Male      |Junior Executive       |36.18 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |3  |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |35.54 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-02 00:00:00|D        |3  |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |35.54 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-01 00:00:00|I        |7  |Ingemar   |Petrus           |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-04 00:00:00|D        |7  |Ingemar   |Petrus           |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-01 00:00:00|I        |8  |Anstice   |Hollingdale      |ahollingdale7@yahoo.co.jp    |Female    |Cost Accountant        |21.94 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-03 00:00:00|U        |8  |Anstice   |Hollingdale Sauce|ahollingdale7@yahoo.co.jp    |Female    |Cost Accountant        |21.94 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |9  |Chaunce   |Holdforth        |choldforth8@ca.gov           |Non-binary|Chief Design Engineer  |72.0  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-03 00:00:00|D        |9  |Chaunce   |Holdforth        |choldforth8@ca.gov           |Non-binary|Chief Design Engineer  |72.0  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |10 |Blinni    |Fenty            |bfenty9@paginegialle.it      |Female    |Assistant Media Planner|38.98 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-02 00:00:00|I        |11 |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Editor                 |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|U        |11 |Tom       |Jerry            |dlegier0@mail.ru             |Agender   |Editor                 |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-02 00:00:00|I        |12 |Panchito  |Scirman          |pscirman1@kickstarter.com    |Male      |Junior Executive       |36.18 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-02 00:00:00|I        |13 |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |35.54 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|D        |13 |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |100.0 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-02 00:00:00|I        |14 |Pascale   |Jedrzaszkiewicz  |pjedrzaszkiewicz3@auda.org.au|Male      |Safety Technician IV   |73.21 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-04 00:00:00|D        |14 |Pascale   |Jedrzaszkiewicz  |pjedrzaszkiewicz3@auda.org.au|Male      |Safety Technician IV   |73.21 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
++-------------------+---------+---+----------+-----------------+-----------------------------+----------+-----------------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+only showing top 20 rows
+
+INFO : 2022-08-10 02:54:31,498 : cdc_append : _delta_lake.py.get_audit: line(34) : Auditing database table raw.cdc_append_customer
+INFO : 2022-08-10 02:54:31,770 : cdc_append : _delta_lake.py.get_audit: line(34) : Auditing database table raw.cdc_append_customer_history
+INFO : 2022-08-10 02:54:31,977 : cdc_append : _delta_lake.py.get_audits: line(48) : {
+    "raw.cdc_append_customer": {
+        "clusterId": null,
+        "engineInfo": "Apache-Spark/3.2.1 Delta-Lake/2.0.0",
+        "isBlindAppend": false,
+        "isolationLevel": "Serializable",
+        "job": null,
+        "notebook": null,
+        "operation": "MERGE",
+        "operationMetrics": {
+            "executionTimeMs": "2395",
+            "numOutputRows": "16",
+            "numSourceRows": "7",
+            "numTargetChangeFilesAdded": "0",
+            "numTargetFilesAdded": "1",
+            "numTargetFilesRemoved": "1",
+            "numTargetRowsCopied": "16",
+            "numTargetRowsDeleted": "0",
+            "numTargetRowsInserted": "0",
+            "numTargetRowsUpdated": "0",
+            "rewriteTimeMs": "1244",
+            "scanTimeMs": "1145"
+        },
+        "operationParameters": {
+            "matchedPredicates": "[{\"predicate\":\"((src.load_flag IN ('I', 'U')) AND (src.extract_date > dst.extract_date))\",\"actionType\":\"update\"},{\"predicate\":\"(src.load_flag IN ('D'))\",\"actionType\":\"delete\"}]",
+            "notMatchedPredicates": "[{\"predicate\":\"(src.load_flag IN ('I', 'U'))\",\"actionType\":\"insert\"}]",
+            "predicate": "(src.id = dst.id)"
+        },
+        "readVersion": 31,
+        "timestamp": "2022-08-10 02:54:29.058000",
+        "userId": null,
+        "userMetadata": null,
+        "userName": null,
+        "version": 32
+    },
+    "raw.cdc_append_customer_history": {
+        "clusterId": null,
+        "engineInfo": "Apache-Spark/3.2.1 Delta-Lake/2.0.0",
+        "isBlindAppend": false,
+        "isolationLevel": "Serializable",
+        "job": null,
+        "notebook": null,
+        "operation": "WRITE",
+        "operationMetrics": {
+            "numFiles": "1",
+            "numOutputBytes": "1312",
+            "numOutputRows": "0"
+        },
+        "operationParameters": {
+            "mode": "Append",
+            "partitionBy": "[]"
+        },
+        "readVersion": 39,
+        "timestamp": "2022-08-10 02:54:23.765000",
+        "userId": null,
+        "userMetadata": null,
+        "userName": null,
+        "version": 40
+    }
+}
+INFO : 2022-08-10 02:54:31,977 : cdc_append : _config_provider.py.load_config: line(41) : Loading Dataflow configuration from file /Users/shaunryan/AzureDevOps/yetl-patterns/config/pipeline/local/config.yaml
+INFO : 2022-08-10 02:54:31,980 : cdc_append : _context.py._get_spark_context: line(85) : Setting spark context
+INFO : 2022-08-10 02:54:31,984 : cdc_append : _context.py.__init__: line(50) : Setting application context spark logger at level ERROR
+INFO : 2022-08-10 02:54:31,987 : cdc_append : _factory.py.get_file_system_type: line(50) : Setting filestystem using protocol file:
+INFO : 2022-08-10 02:54:31,987 : cdc_append : _context.py.__init__: line(66) : Setting application context dataflow cdc_append
+INFO : 2022-08-10 02:54:31,987 : cdc_append : _config_provider.py.load_pipeline_config: line(29) : Loading Dataflow configuration from file /Users/shaunryan/AzureDevOps/yetl-patterns/config/pipeline/local/cdc_append.yaml
+INFO : 2022-08-10 02:54:31,998 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on spark_schema_file 
+INFO : 2022-08-10 02:54:31,999 : cdc_append : _spark_file_schema_repo.py.load_schema: line(50) : Loading schema for dataset landing.cdc_customer from /Users/shaunryan/AzureDevOps/yetl-patterns/config/schema/spark/landing/cdc_customer.yaml using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 02:54:32,004 : cdc_append : _reader.py.__init__: line(49) : auto_io = True automatically creating or altering exception delta table landing.cdc_customer _correlation_id=a8470cbc-fdc0-451f-9daf-9a98027cfc15
+INFO : 2022-08-10 02:54:32,004 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `landing`
+INFO : 2022-08-10 02:54:32,048 : cdc_append : _reader.py.create_or_alter_table: line(61) : Exception table already exists landing.exceptions at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/exceptions/landing/exceptions _correlation_id=a8470cbc-fdc0-451f-9daf-9a98027cfc15
+INFO : 2022-08-10 02:54:32,048 : cdc_append : _reader.py.read: line(195) : Reading data for landing.cdc_customer from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv with options {'mode': 'PERMISSIVE', 'inferSchema': False, 'header': True, 'timestampFormat': 'yyyy-MM-dd HH:mm:ss'} _correlation_id=a8470cbc-fdc0-451f-9daf-9a98027cfc15
+INFO : 2022-08-10 02:54:32,065 : cdc_append : _reader.py.validate: line(181) : Validating dataframe read using PERMISSIVE corrupt column at _corrupt_record _correlation_id=a8470cbc-fdc0-451f-9daf-9a98027cfc15
+INFO : 2022-08-10 02:54:32,254 : cdc_append : _reader.py.validate: line(192) : {
+    "validation": {
+        "schema_on_read": {
+            "landing.cdc_customer": {
+                "total_count": 9,
+                "valid_count": 9,
+                "exception_count": 0
+            }
+        }
+    }
+}
+INFO : 2022-08-10 02:54:32,254 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on deltalake_sql_file 
+INFO : 2022-08-10 02:54:32,254 : cdc_append : _deltalake_sql_file.py.load_schema: line(43) : Loading schema for dataset raw.cdc_append_customer from ./config/schema/deltalake/raw/cdc_append_customer.sql using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 02:54:32,254 : cdc_append : _writer.py.__init__: line(40) : auto_io = True automatically creating or altering delta table raw.cdc_append_customer
+INFO : 2022-08-10 02:54:32,254 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `raw`
+INFO : 2022-08-10 02:54:32,289 : cdc_append : _writer.py.create_or_alter_table: line(88) : Table already exists raw.cdc_append_customer at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer
+INFO : 2022-08-10 02:54:32,289 : cdc_append : _delta_lake.py.get_table_properties: line(69) : getting existing table properties for table raw.cdc_append_customer
+INFO : 2022-08-10 02:54:32,323 : cdc_append : _delta_lake.py.get_table_properties: line(91) : {
+    "raw.cdc_append_customer": {
+        "constraints": {
+            "amount_lower_bound": "amount > - 1000",
+            "amount_upper_bound": "amount < 1000000"
+        },
+        "properties": {
+            "Type": "EXTERNAL",
+            "delta.appendOnly": "False",
+            "delta.checkpoint.writeStatsAsJson": "True",
+            "delta.compatibility.symlinkFormatManifest.enabled": "False",
+            "delta.dataSkippingNumIndexedCols": "-1",
+            "delta.deletedFileRetentionDuration": "interval 1 week",
+            "delta.enableChangeDataFeed": "True",
+            "delta.logRetentionDuration": "interval 30 days",
+            "delta.minReaderVersion": "1",
+            "delta.minWriterVersion": "4",
+            "delta.randomPrefixLength": "2",
+            "delta.randomizeFilePrefixes": "False",
+            "external": "true"
+        }
+    }
+}
+INFO : 2022-08-10 02:54:37,410 : cdc_append : _factory.py.get_schema_repo_type: line(39) : Setting up schema repo on deltalake_sql_file 
+INFO : 2022-08-10 02:54:37,410 : cdc_append : _deltalake_sql_file.py.load_schema: line(43) : Loading schema for dataset raw.cdc_append_customer_history from ./config/schema/deltalake/raw/cdc_append_customer_history.sql using <class 'yetl_flow.file_system._file_system.FileSystem'>
+INFO : 2022-08-10 02:54:37,410 : cdc_append : _writer.py.__init__: line(40) : auto_io = True automatically creating or altering delta table raw.cdc_append_customer_history
+INFO : 2022-08-10 02:54:37,410 : cdc_append : _delta_lake.py.create_database: line(27) : Creating database if not exists `raw`
+INFO : 2022-08-10 02:54:37,442 : cdc_append : _writer.py.create_or_alter_table: line(88) : Table already exists raw.cdc_append_customer_history at file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer_history
+INFO : 2022-08-10 02:54:37,442 : cdc_append : _delta_lake.py.get_table_properties: line(69) : getting existing table properties for table raw.cdc_append_customer_history
+INFO : 2022-08-10 02:54:37,465 : cdc_append : _delta_lake.py.get_table_properties: line(91) : {
+    "raw.cdc_append_customer_history": {
+        "constraints": {
+            "amount_lower_bound": "amount > - 1000",
+            "amount_upper_bound": "amount < 1000000"
+        },
+        "properties": {
+            "Type": "EXTERNAL",
+            "delta.appendOnly": "False",
+            "delta.checkpoint.writeStatsAsJson": "True",
+            "delta.compatibility.symlinkFormatManifest.enabled": "False",
+            "delta.dataSkippingNumIndexedCols": "-1",
+            "delta.deletedFileRetentionDuration": "interval 1 week",
+            "delta.enableChangeDataFeed": "True",
+            "delta.logRetentionDuration": "interval 30 days",
+            "delta.minReaderVersion": "1",
+            "delta.minWriterVersion": "4",
+            "delta.randomPrefixLength": "2",
+            "delta.randomizeFilePrefixes": "False",
+            "external": "true"
+        }
+    }
+}
+INFO : 2022-08-10 02:54:42,535 : cdc_append : _framework.py.wrap_function: line(36) : Executing Dataflow cdc_append with:
+                timeslice=2022-08-04 00:00:00.000000 
+                retries=1 
+                save_type=DefaultSave
+INFO : 2022-08-10 02:54:42,548 : cdc_append : cdc_append.py.cdc_append: line(30) : Fetched dst delta table raw.cdc_append_customer from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer
+INFO : 2022-08-10 02:54:42,559 : cdc_append : cdc_append.py.cdc_append: line(37) : Fetched dst delta table raw.cdc_append_customer_history from file:/Users/shaunryan/AzureDevOps/yetl-patterns/data/delta_lake/raw/cdc_append_customer_history
+INFO : 2022-08-10 02:54:42,606 : cdc_append : cdc_append.py.cdc_append: line(59) : Change set
++---+-------------------+---------+-------+
+|id |extract_date       |load_flag|version|
++---+-------------------+---------+-------+
+|1  |2008-01-01 00:00:00|I        |4      |
+|1  |2008-01-02 00:00:00|U        |3      |
+|1  |2008-01-03 00:00:00|U        |2      |
+|1  |2008-01-04 00:00:00|U        |1      |
+|7  |2008-01-01 00:00:00|I        |2      |
+|7  |2008-01-04 00:00:00|D        |1      |
+|8  |2008-01-01 00:00:00|I        |3      |
+|8  |2008-01-03 00:00:00|U        |2      |
+|8  |2008-01-04 00:00:00|U        |1      |
+|11 |2008-01-02 00:00:00|I        |3      |
+|11 |2008-01-03 00:00:00|U        |2      |
+|11 |2008-01-04 00:00:00|U        |1      |
+|14 |2008-01-02 00:00:00|I        |2      |
+|14 |2008-01-04 00:00:00|D        |1      |
+|17 |2008-01-03 00:00:00|I        |2      |
+|17 |2008-01-04 00:00:00|I        |1      |
+|18 |2008-01-04 00:00:00|I        |1      |
+|19 |2008-01-04 00:00:00|I        |1      |
+|20 |2008-01-04 00:00:00|I        |1      |
++---+-------------------+---------+-------+
+
+INFO : 2022-08-10 02:54:43,475 : cdc_append : cdc_append.py.cdc_append: line(109) : Existing History
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+|extract_date|load_flag|id |first_name|last_name|email|gender|job_title|amount|_correlation_id|_load_timestamp|_filename|
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+
+INFO : 2022-08-10 02:54:44,777 : cdc_append : cdc_append.py.cdc_append: line(111) : New History
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+|extract_date|load_flag|id |first_name|last_name|email|gender|job_title|amount|_correlation_id|_load_timestamp|_filename|
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
++------------+---------+---+----------+---------+-----+------+---------+------+---------------+---------------+---------+
+
+INFO : 2022-08-10 02:54:51,587 : cdc_append : cdc_append.py.cdc_append: line(142) : Current
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+--------------------------+-----------------------------------------------------------------------------------------------+
+|extract_date       |load_flag|id |first_name|last_name      |email                        |gender    |job_title              |amount |_correlation_id                     |_load_timestamp           |_filename                                                                                      |
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+--------------------------+-----------------------------------------------------------------------------------------------+
+|2008-01-04 00:00:00|U        |1  |David     |Legier         |dlegier0@mail.ru             |Agender   |Super Hero             |86.5   |a8470cbc-fdc0-451f-9daf-9a98027cfc15|2022-08-10 02:54:32.112402|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|D        |7  |Ingemar   |Petrus         |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02  |a8470cbc-fdc0-451f-9daf-9a98027cfc15|2022-08-10 02:54:32.112402|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|U        |8  |Anstice   |Hollingdale    |ahollingdale7@yahoo.co.jp    |Female    |Profit Accountant      |21.94  |a8470cbc-fdc0-451f-9daf-9a98027cfc15|2022-08-10 02:54:32.112402|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|U        |11 |Tom       |Jerry          |dlegier0@mail.ru             |Agender   |PM of England          |10000.5|a8470cbc-fdc0-451f-9daf-9a98027cfc15|2022-08-10 02:54:32.112402|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|D        |14 |Pascale   |Jedrzaszkiewicz|pjedrzaszkiewicz3@auda.org.au|Male      |Safety Technician IV   |73.21  |a8470cbc-fdc0-451f-9daf-9a98027cfc15|2022-08-10 02:54:32.112402|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |17 |Ingemar   |Petrus         |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02  |a8470cbc-fdc0-451f-9daf-9a98027cfc15|2022-08-10 02:54:32.112402|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |18 |Anstice   |Hollingdale    |ahollingdale7@yahoo.co.jp    |Female    |Cost Accountant        |21.94  |a8470cbc-fdc0-451f-9daf-9a98027cfc15|2022-08-10 02:54:32.112402|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |19 |Chaunce   |Holdforth      |choldforth8@ca.gov           |Non-binary|Chief Design Engineer  |72.0   |a8470cbc-fdc0-451f-9daf-9a98027cfc15|2022-08-10 02:54:32.112402|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |20 |Blinni    |Fenty          |bfenty9@paginegialle.it      |Female    |Assistant Media Planner|38.98  |a8470cbc-fdc0-451f-9daf-9a98027cfc15|2022-08-10 02:54:32.112402|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+--------------------------+-----------------------------------------------------------------------------------------------+
+
+INFO : 2022-08-10 02:54:56,496 : cdc_append : cdc_append.py.cdc_append: line(156) : raw.cdc_append_customer
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|extract_date       |load_flag|id |first_name|last_name      |email                        |gender    |job_title              |amount |_correlation_id                     |_load_timestamp          |_filename                                                                                      |
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|2008-01-04 00:00:00|U        |1  |David     |Legier         |dlegier0@mail.ru             |Agender   |Super Hero             |86.5   |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-02 00:00:00|U        |2  |Panchito  |Scirman        |pscirman1@kickstarter.com    |Female    |Senior Executive       |36.18  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|I        |3  |Chic      |Ickowics       |wowiback@booking.com         |Male      |Research Associate     |35.54  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |4  |Pascale   |Jedrzaszkiewicz|pjedrzaszkiewicz3@auda.org.au|Male      |Safety Technician IV   |73.21  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |5  |Sara      |Whiterod       |swhiterod4@hhs.gov           |Female    |Assistant Manager      |47.85  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |6  |Mariska   |Antrum         |mantrum5@nytimes.com         |Female    |Tax Accountant         |16.37  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-04 00:00:00|U        |8  |Anstice   |Hollingdale    |ahollingdale7@yahoo.co.jp    |Female    |Profit Accountant      |21.94  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-03 00:00:00|U        |10 |Blinni    |Blimey         |bfenty9@paginegialle.it      |Female    |Assistant Media Planner|38.98  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-04 00:00:00|U        |11 |Tom       |Jerry          |dlegier0@mail.ru             |Agender   |PM of England          |10000.5|345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-03 00:00:00|U        |12 |Panchito  |Scirman        |pscirman1@failedstarter.com  |Male      |Junior Executive       |36.18  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|I        |15 |Sara      |Whiterod       |swhiterod4@hhs.gov           |Female    |Assistant Manager      |47.85  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-03 00:00:00|I        |16 |Mariska   |Antrum         |mantrum5@nytimes.com         |Female    |Tax Accountant         |16.37  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-04 00:00:00|I        |17 |Ingemar   |Petrus         |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |18 |Anstice   |Hollingdale    |ahollingdale7@yahoo.co.jp    |Female    |Cost Accountant        |21.94  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |19 |Chaunce   |Holdforth      |choldforth8@ca.gov           |Non-binary|Chief Design Engineer  |72.0   |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-04 00:00:00|I        |20 |Blinni    |Fenty          |bfenty9@paginegialle.it      |Female    |Assistant Media Planner|38.98  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
++-------------------+---------+---+----------+---------------+-----------------------------+----------+-----------------------+-------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+
+INFO : 2022-08-10 02:54:56,840 : cdc_append : cdc_append.py.cdc_append: line(159) : raw.cdc_append_customer_history
++-------------------+---------+---+----------+-----------------+-----------------------------+----------+-----------------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|extract_date       |load_flag|id |first_name|last_name        |email                        |gender    |job_title              |amount|_correlation_id                     |_load_timestamp          |_filename                                                                                      |
++-------------------+---------+---+----------+-----------------+-----------------------------+----------+-----------------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+|2008-01-01 00:00:00|I        |1  |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Editor                 |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-02 00:00:00|U        |1  |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Super Hero             |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|U        |1  |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Super Villain          |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |2  |Panchito  |Scirman          |pscirman1@kickstarter.com    |Male      |Junior Executive       |36.18 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-01 00:00:00|I        |3  |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |35.54 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-02 00:00:00|D        |3  |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |35.54 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-01 00:00:00|I        |7  |Ingemar   |Petrus           |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-04 00:00:00|D        |7  |Ingemar   |Petrus           |ipetrus6@blogspot.com        |Male      |Chief Design Engineer  |49.02 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
+|2008-01-01 00:00:00|I        |8  |Anstice   |Hollingdale      |ahollingdale7@yahoo.co.jp    |Female    |Cost Accountant        |21.94 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-03 00:00:00|U        |8  |Anstice   |Hollingdale Sauce|ahollingdale7@yahoo.co.jp    |Female    |Cost Accountant        |21.94 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |9  |Chaunce   |Holdforth        |choldforth8@ca.gov           |Non-binary|Chief Design Engineer  |72.0  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-03 00:00:00|D        |9  |Chaunce   |Holdforth        |choldforth8@ca.gov           |Non-binary|Chief Design Engineer  |72.0  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-01 00:00:00|I        |10 |Blinni    |Fenty            |bfenty9@paginegialle.it      |Female    |Assistant Media Planner|38.98 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220801.csv|
+|2008-01-02 00:00:00|I        |11 |Davidde   |Legier           |dlegier0@mail.ru             |Agender   |Editor                 |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|U        |11 |Tom       |Jerry            |dlegier0@mail.ru             |Agender   |Editor                 |86.5  |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-02 00:00:00|I        |12 |Panchito  |Scirman          |pscirman1@kickstarter.com    |Male      |Junior Executive       |36.18 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-02 00:00:00|I        |13 |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |35.54 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-03 00:00:00|D        |13 |Chic      |Ickowics         |cickowics2@booking.com       |Male      |Research Associate     |100.0 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220803.csv|
+|2008-01-02 00:00:00|I        |14 |Pascale   |Jedrzaszkiewicz  |pjedrzaszkiewicz3@auda.org.au|Male      |Safety Technician IV   |73.21 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220802.csv|
+|2008-01-04 00:00:00|D        |14 |Pascale   |Jedrzaszkiewicz  |pjedrzaszkiewicz3@auda.org.au|Male      |Safety Technician IV   |73.21 |345e20ab-c681-4844-a17c-8c3a521ba9e1|2022-08-10 02:44:41.02673|file:///Users/shaunryan/AzureDevOps/yetl-patterns/data/landing/202208/cdc_customer_20220804.csv|
++-------------------+---------+---+----------+-----------------+-----------------------------+----------+-----------------------+------+------------------------------------+-------------------------+-----------------------------------------------------------------------------------------------+
+only showing top 20 rows
+
+INFO : 2022-08-10 02:54:57,179 : cdc_append : _delta_lake.py.get_audit: line(34) : Auditing database table raw.cdc_append_customer
+INFO : 2022-08-10 02:54:57,443 : cdc_append : _delta_lake.py.get_audit: line(34) : Auditing database table raw.cdc_append_customer_history
+INFO : 2022-08-10 02:54:57,644 : cdc_append : _delta_lake.py.get_audits: line(48) : {
+    "raw.cdc_append_customer": {
+        "clusterId": null,
+        "engineInfo": "Apache-Spark/3.2.1 Delta-Lake/2.0.0",
+        "isBlindAppend": false,
+        "isolationLevel": "Serializable",
+        "job": null,
+        "notebook": null,
+        "operation": "MERGE",
+        "operationMetrics": {
+            "executionTimeMs": "2361",
+            "numOutputRows": "16",
+            "numSourceRows": "9",
+            "numTargetChangeFilesAdded": "0",
+            "numTargetFilesAdded": "1",
+            "numTargetFilesRemoved": "1",
+            "numTargetRowsCopied": "16",
+            "numTargetRowsDeleted": "0",
+            "numTargetRowsInserted": "0",
+            "numTargetRowsUpdated": "0",
+            "rewriteTimeMs": "1211",
+            "scanTimeMs": "1145"
+        },
+        "operationParameters": {
+            "matchedPredicates": "[{\"predicate\":\"((src.load_flag IN ('I', 'U')) AND (src.extract_date > dst.extract_date))\",\"actionType\":\"update\"},{\"predicate\":\"(src.load_flag IN ('D'))\",\"actionType\":\"delete\"}]",
+            "notMatchedPredicates": "[{\"predicate\":\"(src.load_flag IN ('I', 'U'))\",\"actionType\":\"insert\"}]",
+            "predicate": "(src.id = dst.id)"
+        },
+        "readVersion": 35,
+        "timestamp": "2022-08-10 02:54:54.769000",
+        "userId": null,
+        "userMetadata": null,
+        "userName": null,
+        "version": 36
+    },
+    "raw.cdc_append_customer_history": {
+        "clusterId": null,
+        "engineInfo": "Apache-Spark/3.2.1 Delta-Lake/2.0.0",
+        "isBlindAppend": false,
+        "isolationLevel": "Serializable",
+        "job": null,
+        "notebook": null,
+        "operation": "WRITE",
+        "operationMetrics": {
+            "numFiles": "1",
+            "numOutputBytes": "1312",
+            "numOutputRows": "0"
+        },
+        "operationParameters": {
+            "mode": "Append",
+            "partitionBy": "[]"
+        },
+        "readVersion": 44,
+        "timestamp": "2022-08-10 02:54:50.051000",
+        "userId": null,
+        "userMetadata": null,
+        "userName": null,
+        "version": 45
+    }
+}
