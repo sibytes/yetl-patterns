@@ -1,9 +1,3 @@
-# Databricks notebook source
-# MAGIC %pip install yetl-framework
-
-# COMMAND ----------
-
-
 from yetl_flow import (
     yetl_flow,
     IDataflow,
@@ -20,15 +14,14 @@ from typing import Type
 from delta.tables import DeltaTable
 
 
-@yetl_flow()
-def cdc_customer_landing_to_rawdb_csv(
+@yetl_flow(log_level="ERROR")
+def type4_cdc(
     context: Context,
     dataflow: IDataflow,
     timeslice: Timeslice = TimesliceUtcNow(),
     save_type: Type[Save] = None,
 ) -> dict:
 
-    show_debug_df = False
     # get the source feed.
     df = dataflow.source_df("landing.cdc_customer")
     df = (
@@ -116,9 +109,8 @@ def cdc_customer_landing_to_rawdb_csv(
         ),
     )
 
-    if show_debug_df:
-        context.log.info("Change set")
-        display(df_change_set.orderBy("id", "extract_date"))
+    context.log.info("Change set")
+    df_change_set.orderBy("id").show(truncate=False)
 
     df_change_set = df_change_set.drop(
         "next_id", "next_version", "next_from_date", "data_name"
@@ -127,9 +119,9 @@ def cdc_customer_landing_to_rawdb_csv(
     df_change_set.persist()
 
     #####################  INSERT DATA INTO HISTORY TABLE  #################################
-    if show_debug_df:
-        context.log.info("Change Set for History")
-        display(df_change_set.where("not active").orderBy("id", "extract_date"))
+    context.log.info("Change Set for Delete")
+    df_change_set.orderBy("id").show(truncate=False)
+    df_change_set.where("not active").orderBy("id").show(truncate=False)
 
     result = (
         dst_table_history.alias("dst")
@@ -154,16 +146,14 @@ def cdc_customer_landing_to_rawdb_csv(
         )
         .execute()
     )
-
-    if show_debug_df:
-        df_history_result = context.spark.sql("select * from raw.cdc_customer_history")
-        context.log.info("History")
-        display(df_history_result.orderBy("id", "extract_date"))
+    df_history_result = context.spark.sql("select * from raw.cdc_customer_history")
+    context.log.info("History")
+    df_history_result.orderBy("id").show(truncate=False)
 
     #####################  INSERT DATA INTO CURRENT TABLE  #################################
-    if show_debug_df:
-        context.log.info("Change Set for Current")
-        display(df_change_set.where("version = 1").orderBy("id", "extract_date"))
+    context.log.info("Change Set for Current")
+    df_change_set.orderBy("id").show(truncate=False)
+    df_change_set.where("version = 1").orderBy("id").show(truncate=False)
 
     # set the change tracking columns of the change set.
     result = (
@@ -176,109 +166,34 @@ def cdc_customer_landing_to_rawdb_csv(
         .whenMatchedDelete("src.load_flag = 'D'")
         .execute()
     )
-
-    if show_debug_df:
-        df_current_result = context.spark.sql("select * from raw.cdc_customer")
-        context.log.info("Current")
-        display(df_current_result.orderBy("id", "extract_date"))
+    df_current_result = context.spark.sql("select * from raw.cdc_customer")
+    context.log.info("Current")
+    df_current_result.orderBy("id").show(truncate=False)
 
 
-# COMMAND ----------
+def incremental_load():
+    days = [1, 1, 2, 2, 3, 4]
+    for d in days:
+        results = type4_cdc(timeslice=Timeslice(2022, 8, d))
 
 
-def clear_down():
+def incremental_backwards_load():
 
-    spark.sql("drop database if exists landing cascade")
-    spark.sql("drop database if exists raw cascade")
-    files = dbutils.fs.ls("/mnt/datalake/yetl_data")
-    print(files)
-
-    for f in files:
-
-        if f.name != "landing/":
-            print(f"deleting the path {f.path}")
-            dbutils.fs.rm(f.path, True)
+    days = [4, 3, 2, 1]
+    for d in days:
+        results = type4_cdc(timeslice=Timeslice(2022, 8, d))
 
 
-# COMMAND ----------
+def incremental_out_of_order_load():
+
+    days = [1, 4, 2, 3]
+    for d in days:
+        results = type4_cdc(timeslice=Timeslice(2022, 8, d))
 
 
-# **********************************************************
-# incremental load
-clear_down()
-days = [1, 1, 2, 2, 3, 4]
-
-for d in days:
-    results = cdc_customer_landing_to_rawdb_csv(timeslice=Timeslice(2022, 8, d))
-
-df = spark.sql(
-    """
-  select *, 'raw.cdc_customer' as table_name from raw.cdc_customer
-  union all
-  select *, 'raw.cdc_customer_history' as table_name  from raw.cdc_customer_history
-"""
-).orderBy("id", "version")
-
-display(df)
-
-# COMMAND ----------
+def full_load():
+    results = type4_cdc(timeslice=Timeslice(2022, 8, "*"))
 
 
-# **********************************************************
-# incremental load
-clear_down()
-days = [4, 3, 2, 1]
-
-for d in days:
-    results = cdc_customer_landing_to_rawdb_csv(timeslice=Timeslice(2022, 8, d))
-
-df = spark.sql(
-    """
-  select *, 'raw.cdc_customer' as table_name from raw.cdc_customer
-  union all
-  select *, 'raw.cdc_customer_history' as table_name  from raw.cdc_customer_history
-"""
-).orderBy("id", "version")
-
-display(df)
-
-# COMMAND ----------
-
-# **********************************************************
-# Bulk
-clear_down()
-
-results = cdc_customer_landing_to_rawdb_csv(timeslice=Timeslice(2022, 8, "*"))
-
-df = spark.sql(
-    """
-  select *, 'raw.cdc_customer' as table_name from raw.cdc_customer
-  union all
-  select *, 'raw.cdc_customer_history' as table_name  from raw.cdc_customer_history
-"""
-).orderBy("id", "version")
-
-display(df)
-
-# COMMAND ----------
-
-clear_down()
-
-days = [1, 2, 4, 3]
-
-for d in days:
-    results = cdc_customer_landing_to_rawdb_csv(timeslice=Timeslice(2022, 8, d))
-
-df = spark.sql(
-    """
-  select *, 'raw.cdc_customer' as table_name from raw.cdc_customer
-  union all
-  select *, 'raw.cdc_customer_history' as table_name  from raw.cdc_customer_history
-"""
-).orderBy("id", "version")
-
-display(df)
-
-# COMMAND ----------
-
-dbutils.notebook.exit("YETL!")
+if __name__ == "__main__":
+    full_load()
