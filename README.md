@@ -23,11 +23,7 @@ To clean up the load after a run to start fresh run:
 sh cleanup.sh
 ```
 
-The demo will also Zorder as per the configuration [demo_landing_to_raw](./config/pipeline/local/demo_landing_to_raw.yaml).
-
-The framework has a number of features not covered in the demo right now:
-- will trap schema exceptions in exception tables configured using Mode=PERMISSIVE and _corrupt_record or using badrecrodspath which is only supported on databricks - try loading partition 20210101
-- You can configure it to infer and save schema's into the repo on a 1st pass in order to speed up development time creating the initial schema that can be refined afterwards
+The demo will also Zorder as per the configuration [demo_landing_to_raw](./config/pipeline/local/demo_landing_to_raw.yaml). Note the framework has a number of features not covered in the demo right now.
 
 Data including the included raw and where delta lake is configured to write to is here:
 ```
