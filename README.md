@@ -29,6 +29,26 @@ The framework has a number of features not covered in the demo right now:
 - will trap schema exceptions in exception tables configured using Mode=PERMISSIVE and _corrupt_record or using badrecrodspath which is only supported on databricks - try loading partition 20210101
 - You can configure it to infer and save schema's into the repo on a 1st pass in order to speed up development time creating the initial schema that can be refined afterwards
 
+Data including the included raw and where delta lake is configured to write to is here:
+```
+./data/delta_lake
+./data/landing
+```
+
+Configuration for the pipeline for local and databricks is as follows along with the spark and SQL schema's used by the framework.
+
+local & dbx pipeline config:
+```
+./config/pipeline/local
+./config/pipeline/local
+```
+
+schema repo:
+```
+delta lake table -> ./config/schema/deltalake/raw/customer.sql
+spark schema - > ./config/schema/spark/landing/
+```
+
 ### Define a dataflow
 
 ```python
