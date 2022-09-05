@@ -1,5 +1,15 @@
 black==22.6.0
-
+click==8.1.3
+delta-spark==2.1.0
+importlib-metadata==4.12.0
+mypy-extensions==0.4.3
+pathspec==0.10.1
+platformdirs==2.5.2
+py4j==0.10.9.5
+pyspark==3.3.0
+PyYAML==6.0
+regex==2022.8.17
+tomli==2.0.1
+typing_extensions==4.3.0
 yetl-framework==0.0.13
-# -e git+ssh://git@github.com/sibytes/yetl.git@0b480a609c45232c4804db96e0ccb0fe0333d3e3#egg=yetl_framework
-
+zipp==3.8.1

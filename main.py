@@ -44,10 +44,12 @@ def demo_landing_to_raw(
 # incremental load
 # timeslice = Timeslice(2022, 7, 11)
 # timeslice = Timeslice(2022, 7, 12)
+
+# Bulk month load
 timeslice = Timeslice(2022, 7, "*")
 results = demo_landing_to_raw(timeslice=timeslice)
 
-# reload load
+# Bulk year reload load
 
 # results = demo_landing_to_raw(
 #     timeslice=Timeslice(2022, "*", "*"), save_type=OverwriteSchemaSave
