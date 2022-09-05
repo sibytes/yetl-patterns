@@ -40,10 +40,14 @@ def demo_landing_to_raw(
 
     dataflow.destination_df("raw.customer", df)
 
+# incremental load - capture schema exceptions
+# timeslice = Timeslice(2021, 1, 1)
+# results = demo_landing_to_raw(timeslice=timeslice)
 
 # incremental load
 # timeslice = Timeslice(2022, 7, 11)
 # timeslice = Timeslice(2022, 7, 12)
+# results = demo_landing_to_raw(timeslice=timeslice)
 
 # Bulk month load
 timeslice = Timeslice(2022, 7, "*")
