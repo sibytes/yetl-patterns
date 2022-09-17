@@ -97,7 +97,7 @@ def demo_landing_to_raw(
 ```python
 # timeslice = Timeslice(2022, 7, 11)
 timeslice = Timeslice(2022, 7, 12)
-results = customer_landing_to_rawdb_csv(
+results = demo_landing_to_raw(
     timeslice = timeslice
 )
 ```
@@ -106,7 +106,7 @@ results = customer_landing_to_rawdb_csv(
 
 ```python
 timeslice = Timeslice(2022, 7, '*')
-results = customer_landing_to_rawdb_csv(
+results = demo_landing_to_raw(
     timeslice = timeslice
 )
 ```
@@ -114,7 +114,7 @@ results = customer_landing_to_rawdb_csv(
 ## Run a full load:
 
 ```python
-results = customer_landing_to_rawdb_csv(
+results = demo_landing_to_raw(
     timeslice = Timeslice(2022, '*', '*'),
     save_type = OverwriteSave
 )
