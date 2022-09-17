@@ -13,19 +13,19 @@ Website & Docs: [Yet (another Apache Spark) ETL Framework](https://www.yetl.io/)
 
 ## Demo Landing To Raw:
 
-Run [main.py](./main.py). If in vscode and the dependencies are setup you should just be able to hit F5 since [.vscode](./.vscode)is included in this repo.
+Run [main.py](./main.py). If you're using vscode and the dependencies are setup you should just be able to hit F5 since [.vscode](./.vscode) is included in this repo.
 When the execution completes, run `pyspark` in the project root and should should be able to query the result `raw.customer` table that was loaded.  
 
-Check the table properties using `DESCRIBE` and observer partitions that have been applied automatically by framework.
+Check the table properties using `DESCRIBE` and observe partitions and other properties that have been applied automatically by framework.
 
-To clean up the load after a run to start fresh run:
+To clean up the load after a run in order to start fresh run:
 ```
 sh cleanup.sh
 ```
 
 The demo will also Zorder as per the configuration [demo_landing_to_raw](./config/pipeline/local/demo_landing_to_raw.yaml). Note the framework has a number of features not covered in the demo right now.
 
-Data including the included raw and where delta lake is configured to write to is here:
+Source landing stage data is included in the repo at the following respective location. Delta lake is also configured to write to this location. The delta lake dir will appear after you run the demo. It is not included in the source code and `sh cleanup.sh` will remove it to clean down the delta lake db:
 ```
 ./data/delta_lake
 ./data/landing
