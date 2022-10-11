@@ -11,5 +11,5 @@ PyYAML==6.0
 regex==2022.8.17
 tomli==2.0.1
 typing_extensions==4.3.0
--e git+ssh://git@github.com/sibytes/yetl.git@c5053f609cef3d3ede91a373c8ef69492fc329b8#egg=yetl_framework
+yetl-framework==0.0.20
 zipp==3.8.1
