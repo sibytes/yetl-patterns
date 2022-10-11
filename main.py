@@ -1,23 +1,25 @@
 from yetl_flow import (
     yetl_flow,
     IDataflow,
-    Context,
+    IContext,
     Timeslice,
     TimesliceUtcNow,
     OverwriteSave,
     OverwriteSchemaSave,
+    MergeSave,
     Save,
 )
 from pyspark.sql.functions import *
 from typing import Type
+import json
 
 
 @yetl_flow(log_level="ERROR")
 def demo_landing_to_raw(
-    context: Context,
+    context: IContext,
     dataflow: IDataflow,
     timeslice: Timeslice = TimesliceUtcNow(),
-    save_type: Type[Save] = None,
+    save: Type[Save] = None,
 ) -> dict:
     """Load the demo customer data as is into a raw delta hive registered table.
 
@@ -40,21 +42,17 @@ def demo_landing_to_raw(
 
     dataflow.destination_df("raw.customer", df)
 
-# incremental load - capture schema exceptions
-# timeslice = Timeslice(2021, 1, 1)
-# results = demo_landing_to_raw(timeslice=timeslice)
+
 
 # incremental load
-# timeslice = Timeslice(2022, 7, 11)
+# timeslice = Timeslice(2021, 1, 1)
 # timeslice = Timeslice(2022, 7, 12)
-# results = demo_landing_to_raw(timeslice=timeslice)
+# timeslice = Timeslice(2022, 7, "*")
+# results = batch_text_csv_to_delta_permissive_1(timeslice=timeslice)
+# print(results)
 
-# Bulk month load
-timeslice = Timeslice(2022, 7, "*")
-results = demo_landing_to_raw(timeslice=timeslice)
-
-# Bulk year reload load
-
-# results = demo_landing_to_raw(
-#     timeslice=Timeslice(2022, "*", "*"), save_type=OverwriteSchemaSave
-# )
+# reload load
+timeslice = Timeslice(2022, "*", "*")
+results = demo_landing_to_raw(timeslice=timeslice, save=OverwriteSave)
+results = json.dumps(results, indent=4, default=str)
+print(results)
